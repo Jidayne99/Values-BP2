@@ -2,9 +2,9 @@
 
 | Item           | Value (OG) | Value (Tag/Serial) | Demand | Rarity | Sales (OG) | Sales (Tag/Serial) |
 | :------------- | :--------- | :----------------- | :----- | :----- | :--------- | :----------------- |
-| Night Sky      | 55         | 40-50              | 7/10   | High   | 45$        | 35-40$             |
-| Ash's Skyline  | 65         | 50-60              | 7/10   | High   | 50$        | 40-50$             |
-| Forest Gun     | 45         | 30-35              | 6/10   | Mid    | 35$        | 25-30$             |
+| Night Sky      | 55         | N/A                | 7/10   | High   | 40$        | 40$             |
+| Ash's Skyline  | 45         | N/A                | 7/10   | High   | 30$        | 20$             |
+| Forest Gun     | 25         | N/A                | 6/10   | Mid    | 20$        | 20$             |
 
 ---
 
@@ -33,19 +33,19 @@
 | Cyclone        | 36         | N/A                | 8/10   | Mid       | 30$           | N/A                |
 | Miracle        | 40         | 20                 | 7/10   | Mid       | 30$           | 15$                |
 | Grime          | 65         | 55                 | 7/10   | Mid       | 45$           | 40$                |
+| Mellow         | 65         | 8-11               | 7/10   | Mid       | 45$           | 8-10$              |
 | Hyperion       | 65         | N/A                | 8/10   | Mid       | 45$           | N/A                |
 | Luminance      | 70         | N/A                | 8/10   | Mid       | 50$           | N/A                |
-| Mellow         | 65         | 8-11               | 7/10   | Mid       | 50$           | 8-10$              |
 | Ghoul          | 75         | 80                 | 8/10   | Mid       | 55$           | 60$                |
 | Supernova      | 80         | 38                 | 7/10   | Mid       | 55$           | 30$                |
 | Equinox        | 85         | N/A                | 8/10   | Mid       | 60$           | N/A                |
 | Sea of Voices  | 130        | N/A                | 8/10   | High      | 90$           | N/A                |
 | Permafrost     | 160        | N/A                | 6/10   | High      | 100$          | N/A                |
 | Neptune        | 180        | 190                | 8/10   | High      | 110$          | 120$               |
-| Radiant 2      | 220        | N/A                | 7/10   | Mid       | 120$          | N/A                |
+| Radiant 2      | 220        | N/A                | 7/10   | High      | 120$          | N/A                |
 | Lovely Azure   | 260        | 320                | 7/10   | High      | 140$          | 180$               |
-| Corrupt        | 250-350    | 250-350            | 8/10   | High      | 140-180$      | N/A                |
-| Vampire        | 250-350    | N/A                | 8/10   | High      | 140-180$      | N/A                |
+| Corrupt        | N/A        | 250-350            | 8/10   | High      | 140-180$      | N/A                |
+| Vampire        | N/A        | 250-350            | 8/10   | High      | 140-180$      | N/A                |
 | Aureus         | 350        | 350-450            | 7/10   | High      | 190$          | 200-250$           |
 | Eerie          | 550        | 320                | 9/10   | Extreme   | 300$          | 170$               |
 | Keqing         | 700        | 700-1100           | 9/10   | Extreme   | 350$          | 350-550$           |
@@ -85,7 +85,7 @@
 
 | Item        | Value (OG) | Value (Tag) | Demand                  | Rarity    | Sales (OG) | Sales (Tag) |
 | :---------- | :--------- | :---------- | :---------------------- | :-------- | :--------- | :---------- |
-| RGB Antlers | N/A        | N/A         | Stone Cold | Extreme   | N/A        | N/A         |
+| RGB Antlers | N/A        | N/A         | Stone Cold Steve Austin | Extreme   | N/A        | N/A         |
 | RGB Wings   | 11         | N/A         | 6/10                    | Low       | 10$        | N/A         |
 | 8-BIT       | 7          | 3           | 6/10                    | Mid       | 5$         | 3$          |
 | Mono Wings  | 6          | 3           | 5/10                    | Low       | 5$         | 3$          |
