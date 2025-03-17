@@ -8,6 +8,14 @@
         body {
             background-color: #000000;
             color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #00e1ff; /* Cyan-blue glow */
+            text-shadow: 0px 0px 10px #00e1ff;
         }
         table {
             width: 100%;
@@ -15,17 +23,52 @@
             margin-bottom: 20px;
         }
         th, td {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
+            padding: 10px 14px;
+            border: 1px solid #777;
+            text-align: center;
+            font-size: 16px;
         }
         th {
-            background-color: #333333;
-            color: #ffffff;
+            background-color: #222;
+            color: #ffcc00;
+            font-weight: bold;
+            text-shadow: 0px 0px 5px #ffcc00;
         }
         td {
-            background-color: #444444;
+            background-color: #333;
             color: #ffffff;
         }
+        td:first-child {
+            font-weight: bold;
+            font-size: 18px;
+            text-shadow: 0px 0px 5px #ff9900; /* Glow effect for item names */
+        }
+        /* Demand Colors */
+        .demand-5 { color: #ff4444; text-shadow: 0px 0px 6px #ff4444; font-weight: bold; }
+        .demand-6 { color: #ffff66; text-shadow: 0px 0px 6px #ffff66; font-weight: bold; }
+        .demand-7 { color: #66ff66; text-shadow: 0px 0px 6px #66ff66; font-weight: bold; }
+        .demand-8 { color: #cc99ff; text-shadow: 0px 0px 6px #cc99ff; font-weight: bold; }
+
+        /* Rarity Colors */
+        .rarity-low { color: #ff4444; text-shadow: 0px 0px 6px #ff4444; font-weight: bold; }
+        .rarity-mid { color: #ff8800; text-shadow: 0px 0px 6px #ff8800; font-weight: bold; }
+        .rarity-high { color: #00ff00; text-shadow: 0px 0px 6px #00ff00; font-weight: bold; }
+        .rarity-extreme { color: #cc00ff; text-shadow: 0px 0px 6px #cc00ff; font-weight: bold; }
+
+        /* Value Colors */
+        .value-low { color: #66ccff; font-weight: bold; } /* Light Blue */
+        .value-mid { color: #00ffff; font-weight: bold; } /* Cyan */
+        .value-high { color: #0099ff; font-weight: bold; } /* Neon Blue */
+        .value-extreme { color: #0055ff; font-weight: bold; } /* Deep Electric Blue */
+
+        /* Sales Colors */
+        .sales-low { color: #ff66ff; font-weight: bold; } /* Pink */
+        .sales-mid { color: #cc99ff; font-weight: bold; } /* Light Purple */
+        .sales-high { color: #aa00ff; font-weight: bold; } /* Bright Purple */
+        .sales-extreme { color: #8000ff; font-weight: bold; } /* Royal Purple */
+
+        /* Bold N/A */
+        .na { font-weight: bold; color: #ffffff; }
     </style>
 </head>
 <body>
@@ -34,47 +77,47 @@
     <table>
         <thead>
             <tr>
-                <th>Item</th>
-                <th>Value (OG)</th>
-                <th>Value (Tag/Serial)</th>
-                <th>Demand</th>
-                <th>Rarity</th>
-                <th>Sales (OG)</th>
-                <th>Sales (Tag/Serial)</th>
+                <th>ITEM</th>
+                <th>VALUE (OG)</th>
+                <th>VALUE (TAG/SERIAL)</th>
+                <th>DEMAND</th>
+                <th>RARITY</th>
+                <th>SALES (OG)</th>
+                <th>SALES (TAG/SERIAL)</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>Night Sky</td>
-                <td>55</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>High</td>
-                <td>40$</td>
-                <td>N/A</td>
+                <td class="value-mid">55</td>
+                <td class="na">N/A</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-high">High</td>
+                <td class="sales-mid">$40</td>
+                <td class="na">N/A</td>
             </tr>
             <tr>
                 <td>Ash's Skyline</td>
-                <td>40</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>High</td>
-                <td>30$</td>
-                <td>N/A</td>
+                <td class="value-mid">40</td>
+                <td class="na">N/A</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-high">High</td>
+                <td class="sales-mid">$30</td>
+                <td class="na">N/A</td>
             </tr>
             <tr>
                 <td>Forest Gun</td>
-                <td>25</td>
-                <td>N/A</td>
-                <td>6/10</td>
-                <td>High</td>
-                <td>20$</td>
-                <td>N/A</td>
+                <td class="value-mid">25</td>
+                <td class="na">N/A</td>
+                <td class="demand-6">6/10</td>
+                <td class="rarity-high">High</td>
+                <td class="sales-mid">$20</td>
+                <td class="na">N/A</td>
             </tr>
         </tbody>
     </table>
 
-    <h2>Knives</h2>
+<h2>Knives</h2>
     <table>
         <thead>
             <tr>
@@ -90,791 +133,888 @@
         <tbody>
             <tr>
                <td>Azure</td>
-               <td>0.5</td>
-               <td>N/A</td>
-               <td>5.5/10</td>
-               <td>Low</td>
-               <td>0.5$</td>
-               <td>N/A</td>
+               <td class="value-low">0.5</td>
+               <td class="na">N/A</td>
+               <td class="demand-5">5.5/10</td>
+               <td class="rarity-low">Low</td>
+               <td class="sales-low">$0.5</td>
+               <td class="na">N/A</td>
             </tr>
             <tr>
               <td>Jade</td>
-              <td>0.5</td>
-              <td>N/A</td>
-              <td>5.5/10</td>
-              <td>Low</td>
-              <td>0.5$</td>
-              <td>N/A</td>
+              <td class="value-low">0.5</td>
+              <td class="na">N/A</td>
+              <td class="demand-5">5.5/10</td>
+              <td class="rarity-low">Low</td>
+              <td class="sales-low">$0.5</td>
+              <td class="na">N/A</td>
             </tr>
             <tr>
                <td>Arctic</td>
-               <td>1</td>
-               <td>N/A</td>
-               <td>6/10</td>
-               <td>Low</td>
-               <td>1$</td>
-               <td>N/A</td>
+               <td class="value-low">1</td>
+               <td class="na">N/A</td>
+               <td class="demand-6">6/10</td>
+               <td class="rarity-low">Low</td>
+               <td class="sales-low">$1</td>
+               <td class="na">N/A</td>
             </tr>
             <tr>
                <td>Sakura</td>
-               <td>2</td>
-               <td>N/A</td>
-               <td>6.5/10</td>
-               <td>Low</td>
-               <td>2$</td>
-               <td>N/A</td>
+               <td class="value-low">2</td>
+               <td class="na">N/A</td>
+               <td class="demand-6">6.5/10</td>
+               <td class="rarity-low">Low</td>
+               <td class="sales-low">$2</td>
+               <td class="na">N/A</td>
             </tr>
             <tr>
                <td>RGB Eternal</td>
-               <td>3</td>
-               <td>6</td>
-               <td>6.5/10</td>
-               <td>Low</td>
-               <td>3$</td>
-               <td>5$</td>
+               <td class="value-low">3</td>
+               <td class="value-low">6</td>
+               <td class="demand-6">6.5/10</td>
+               <td class="rarity-low">Low</td>
+               <td class="sales-low">$3</td>
+               <td class="sales-low">$5</td>
             </tr>
             <tr>
                 <td>Cosmic</td>
-                <td>11</td>
-                <td>4-5</td>
-                <td>7/10</td>
-                <td>Low</td>
-                <td>10$</td>
-                <td>4$</td>
+                <td class="value-low">11</td>
+                <td class="value-low">4-5</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-low">Low</td>
+                <td class="sales-low">$10</td>
+                <td class="sales-low">$4</td>
             </tr>
             <tr>
                 <td>Cerulean</td>
-                <td>14</td>
-                <td>4-5</td>
-                <td>7/10</td>
-                <td>Low</td>
-                <td>10$</td>
-                <td>4$</td>
+                <td class="value-low">14</td>
+                <td class="value-low">4-5</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-low">Low</td>
+                <td class="sales-low">$10</td>
+                <td class="sales-low">$4</td>
             </tr>
             <tr>
                 <td>Phantom</td>
-                <td>15</td>
-                <td>4-5</td>
-                <td>7/10</td>
-                <td>Low</td>
-                <td>10$</td>
-                <td>4$</td>
-            </tr>
-            <tr>
-                <td>Infinite</td>
-                <td>21</td>
-                <td>6-10</td>
-                <td>7/10</td>
-                <td>Mid</td>
-                <td>18$</td>
-                <td>6-8$</td>
-            </tr>
-            <tr>
-                <td>Radiant</td>
-                <td>22</td>
-                <td>5-6</td>
-                <td>7/10</td>
-                <td>Mid</td>
-                <td>18$</td>
-                <td>5$</td>
-            </tr>
-            <tr>
-                <td>Eternal</td>
-                <td>26</td>
-                <td>5-6</td>
-                <td>7/10</td>
-                <td>Mid</td>
-                <td>23$</td>
-                <td>5$</td>
-            </tr>
-            <tr>
-                <td>Fracture</td>
-                <td>26</td>
-                <td>5-6</td>
-                <td>7/10</td>
-                <td>Mid</td>
-                <td>23$</td>
-                <td>5$</td>
+                <td class="value-low">15</td>
+                <td class="value-low">4-5</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-low">Low</td>
+                <td class="sales-low">$10</td>
+                <td class="sales-low">$4</td>
             </tr>
             <tr>
                 <td>Paranormal</td>
-                <td>9</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>Low</td>
-                <td>8$</td>
-                <td>N/A</td>
+                <td class="value-low">9</td>
+                <td class="na">N/A</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-low">Low</td>
+                <td class="sales-low">$8</td>
+                <td class="na">N/A</td>
             </tr>
             <tr>
                 <td>Splash</td>
-                <td>9</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>Low</td>
-                <td>8$</td>
-                <td>N/A</td>
+                <td class="value-low">9</td>
+                <td class="na">N/A</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-low">Low</td>
+                <td class="sales-low">$8</td>
+                <td class="na">N/A</td>
+            </tr>
+                <tr>
+    <td>Heartache</td>
+    <td class="value-low">16</td>
+    <td class="na">N/A</td>
+    <td class="demand-7">7.5/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$15</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td>Latte</td>
+    <td class="value-low">17</td>
+    <td class="na">N/A</td>
+    <td class="demand-7">7.5/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$15</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td>Blue Cosmic</td>
+    <td class="value-low">18</td>
+    <td class="na">N/A</td>
+    <td class="demand-8">8.5/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$15</td>
+    <td class="na">N/A</td>
+     <tr>
+                <td>Infinite</td>
+                <td class="value-mid">21</td>
+                <td class="value-low">6-10</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-mid">Mid</td>
+                <td class="sales-low">$18</td>
+                <td class="sales-low">$6-8</td>
             </tr>
             <tr>
-                <td>Heartache</td>
-                <td>16</td>
-                <td>N/A</td>
-                <td>7.5/10</td>
-                <td>Low</td>
-                <td>15$</td>
-                <td>N/A</td>
+                <td>Radiant</td>
+                <td class="value-mid">22</td>
+                <td class="value-low">5-6</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-mid">Mid</td>
+                <td class="sales-low">$18</td>
+                <td class="sales-low">$5</td>
             </tr>
-            <tr>
-                <td>Latte</td>
-                <td>17</td>
-                <td>N/A</td>
-                <td>7.5/10</td>
-                <td>Low</td>
-                <td>15$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Blue Cosmic</td>
-                <td>18</td>
-                <td>N/A</td>
-                <td>8.5/10</td>
-                <td>Low</td>
-                <td>15$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Blue Splash</td>
-                <td>22</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>Low</td>
-                <td>20$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Jinx</td>
-                <td>23</td>
-                <td>N/A</td>
-                <td>6.5/10</td>
-                <td>Low</td>
-                <td>20$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Blood Radiant</td>
-                <td>23</td>
-                <td>8-11</td>
-                <td>7.5/10</td>
-                <td>Low</td>
-                <td>20$</td>
-                <td>8-10$</td>
-            </tr>
-            <tr>
-                <td>Envy</td>
-                <td>26</td>
-                <td>N/A</td>
-                <td>7.5/10</td>
-                <td>Low</td>
-                <td>23$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Insomnia</td>
-                <td>28</td>
-                <td>N/A</td>
-                <td>8/10</td>
-                <td>Mid</td>
-                <td>25$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Dracula</td>
-                <td>30</td>
-                <td>N/A</td>
-                <td>7.5/10</td>
-                <td>Low</td>
-                <td>25$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Cyclone</td>
-                <td>38</td>
-                <td>N/A</td>
-                <td>8/10</td>
-                <td>Mid</td>
-                <td>30$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Miracle</td>
-                <td>40</td>
-                <td>20</td>
-                <td>7.5/10</td>
-                <td>Mid</td>
-                <td>30$</td>
-                <td>15$</td>
-            </tr>
-            <tr>
-                <td>Grime</td>
-                <td>60</td>
-                <td>50</td>
-                <td>7.5/10</td>
-                <td>Mid</td>
-                <td>40$</td>
-                <td>35$</td>
-            </tr>
-            <tr>
-                <td>Hyperion</td>
-                <td>65</td>
-                <td>N/A</td>
-                <td>8/10</td>
-                <td>Mid</td>
-                <td>45$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Mellow</td>
-                <td>65</td>
-                <td>8-11</td>
-                <td>7.5/10</td>
-                <td>Mid</td>
-                <td>45$</td>
-                <td>8-10$</td>
-            </tr>
-            <tr>
-                <td>Luminance</td>
-                <td>75</td>
-                <td>N/A</td>
-                <td>8.5/10</td>
-                <td>Mid</td>
-                <td>50$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Ghoul</td>
-                <td>80</td>
-                <td>85</td>
-                <td>8.5/10</td>
-                <td>Mid</td>
-                <td>55$</td>
-                <td>60$</td>
-            </tr>
-            <tr>
-                <td>Supernova</td>
-                <td>85</td>
-                <td>36</td>
-                <td>7.5/10</td>
-                <td>Mid</td>
-                <td>55$</td>
-                <td>30$</td>
-            </tr>
-            <tr>
-                <td>Equinox</td>
-                <td>85</td>
-                <td>N/A</td>
-                <td>8.5/10</td>
-                <td>Mid</td>
-                <td>60$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Sea of Voices</td>
-                <td>130</td>
-                <td>N/A</td>
-                <td>8/10</td>
-                <td>High</td>
-                <td>90$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Permafrost</td>
-                <td>160</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>High</td>
-                <td>100$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Neptune</td>
-                <td>180</td>
-                <td>190</td>
-                <td>8/10</td>
-                <td>High</td>
-                <td>110$</td>
-                <td>115$</td>
-            </tr>
-            <tr>
-                <td>Radiant 2</td>
-                <td>220</td>
-                <td>N/A</td>
-                <td>7.5/10</td>
-                <td>High</td>
-                <td>120$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Lovely Azure</td>
-                <td>260</td>
-                <td>320</td>
-                <td>7.5/10</td>
-                <td>High</td>
-                <td>140$</td>
-                <td>180$</td>
-            </tr>
-            <tr>
-                <td>Corrupt</td>
-                <td>N/A</td>
-                <td>250-350</td>
-                <td>8/10</td>
-                <td>High</td>
-                <td>140-180$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Vampire</td>
-                <td>N/A</td>
-                <td>250-350</td>
-                <td>8/10</td>
-                <td>High</td>
-                <td>140-180$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Aureus</td>
-                <td>350</td>
-                <td>350-450</td>
-                <td>7.5/10</td>
-                <td>High</td>
-                <td>180$</td>
-                <td>180-220$</td>
-            </tr>
-            <tr>
-                <td>Eerie</td>
-                <td>550</td>
-                <td>340</td>
-                <td>8.5/10</td>
-                <td>Extreme</td>
-                <td>260$</td>
-                <td>160$</td>
-            </tr>
-            <tr>
-                <td>Keqing</td>
-                <td>700</td>
-                <td>700-1100</td>
-                <td>8.5/10</td>
-                <td>Extreme</td>
-                <td>320$</td>
-                <td>300-450$</td>
-            </tr>
-            <tr>
-                <td>La Lune</td>
-                <td>1200</td>
-                <td>700-1000</td>
-                <td>8/10</td>
-                <td>Extreme</td>
-                <td>500$</td>
-                <td>300-400$</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>Chairs</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Value (OG)</th>
-                <th>Value (Tag/Serial)</th>
-                <th>Demand</th>
-                <th>Rarity</th>
-                <th>Sales (OG)</th>
-                <th>Sales (Tag/Serial)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Legacy</td>
-                <td>N/A</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>Extreme</td>
-                <td>N/A</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Royal Red</td>
-                <td>230</td>
-                <td>50</td>
-                <td>6/10</td>
-                <td>Extreme</td>
-                <td>130$</td>
-                <td>35$</td>
-            </tr>
-            <tr>
-                <td>Festive Devil</td>
-                <td>220</td>
-                <td>30-40</td>
-                <td>7/10</td>
-                <td>Extreme</td>
-                <td>120$</td>
-                <td>30$</td>
-            </tr>
-            <tr>
-                <td>Dusk</td>
-                <td>140</td>
-                <td>100-150</td>
-                <td>7/10</td>
-                <td>High</td>
-                <td>90$</td>
-                <td>70-100$</td>
-            </tr>
-            <tr>
-                <td>Hallow</td>
-                <td>75</td>
-                <td>35</td>
-                <td>6/10</td>
-                <td>High</td>
-                <td>50$</td>
-                <td>25$</td>
-            </tr>
-            <tr>
-                <td>RGB Devil</td>
-                <td>45</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>Mid</td>
-                <td>35$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Vibrant</td>
-                <td>40</td>
-                <td>30</td>
-                <td>7/10</td>
-                <td>High</td>
-                <td>30$</td>
-                <td>25$</td>
-            </tr>
-            <tr>
-                <td>Blossom</td>
-                <td>30</td>
-                <td>7</td>
-                <td>6/10</td>
-                <td>Mid</td>
-                <td>25$</td>
-                <td>5$</td>
-            </tr>
-            <tr>
-                <td>Rosa Devil</td>
-                <td>30</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>Mid</td>
-                <td>25$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Seafoam</td>
-                <td>20</td>
-                <td>N/A</td>
-                <td>6/10</td>
-                <td>Mid</td>
-                <td>15$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Decay</td>
-                <td>20</td>
-                <td>5</td>
-                <td>6/10</td>
-                <td>High</td>
-                <td>15$</td>
-                <td>4$</td>
-            </tr>
-            <tr>
-                <td>Fragrant</td>
-                <td>16</td>
-                <td>11</td>
-                <td>6/10</td>
-                <td>Mid</td>
-                <td>10$</td>
-                <td>8$</td>
-            </tr>
-            <tr>
-                <td>Forest Devil</td>
-                <td>13</td>
-                <td>5</td>
-                <td>6/10</td>
-                <td>High</td>
-                <td>10$</td>
-                <td>5$</td>
-            </tr>
-            <tr>
-                <td>Storm</td>
-                <td>12</td>
-                <td>7</td>
-                <td>6/10</td>
-                <td>Mid</td>
-                <td>9$</td>
-                <td>6$</td>
-            </tr>
-            <tr>
-                <td>Swamp</td>
-                <td>11</td>
-                <td>6</td>
-                <td>6/10</td>
-                <td>Mid</td>
-                <td>8$</td>
-                <td>5$</td>
-            </tr>
-            <tr>
-                <td>Cupid</td>
-                <td>11</td>
-                <td>6</td>
-                <td>6/10</td>
-                <td>Mid</td>
-                <td>8$</td>
-                <td>5$</td>
-            </tr>
-            <tr>
-                <td>Gingerbread</td>
-                <td>10</td>
-                <td>3</td>
-                <td>6/10</td>
-                <td>Extreme</td>
-                <td>8$</td>
-                <td>3$</td>
-            </tr>
-            <tr>
-                <td>Frost Devil</td>
-                <td>9</td>
-                <td>4</td>
-                <td>6/10</td>
-                <td>Mid</td>
-                <td>7$</td>
-                <td>3$</td>
-            </tr>
-            <tr>
-                <td>Lovesick</td>
-                <td>8</td>
-                <td>4</td>
-                <td>5.5/10</td>
-                <td>Low</td>
-                <td>6$</td>
-                <td>4$</td>
-            </tr>
-            <tr>
-                <td>Cursed</td>
-                <td>7</td>
-                <td>4</td>
-                <td>5.5/10</td>
-                <td>Low</td>
-                <td>5$</td>
-                <td>3$</td>
-            </tr>
-            <tr>
-                <td>Shore</td>
-                <td>6</td>
-                <td>N/A</td>
-                <td>6/10</td>
-                <td>Low</td>
-                <td>5$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Christmas</td>
-                <td>6</td>
-                <td>N/A</td>
-                <td>6/10</td>
-                <td>Extreme</td>
-                <td>5$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Lantern</td>
-                <td>5</td>
-                <td>N/A</td>
-                <td>6/10</td>
-                <td>Extreme</td>
-                <td>4$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Pumpkin</td>
-                <td>5</td>
-                <td>N/A</td>
-                <td>6/10</td>
-                <td>Extreme</td>
-                <td>4$</td>
-                <td>N/A</td>
-            </tr>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>Accessories</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Value (OG)</th>
-                <th>Value (Tag)</th>
-                <th>Demand</th>
-                <th>Rarity</th>
-                <th>Sales (OG)</th>
-                <th>Sales (Tag)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>RGB Antlers</td>
-                <td>N/A</td>
-                <td>N/A</td>
-                <td>Gay Porn</td>
-                <td>Extreme</td>
-                <td>N/A</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>RGB Wings</td>
-                <td>11</td>
-                <td>N/A</td>
-                <td>6.5/10</td>
-                <td>Low</td>
-                <td>9$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>8-BIT</td>
-                <td>6</td>
-                <td>3</td>
-                <td>6.5/10</td>
-                <td>Mid</td>
-                <td>5$</td>
-                <td>3$</td>
-            </tr>
-            <tr>
-                <td>Mono Wings</td>
-                <td>5</td>
-                <td>3</td>
-                <td>5.5/10</td>
-                <td>Low</td>
-                <td>5$</td>
-                <td>3$</td>
-             </tr>
              <tr>
-                <td>Bat Guard</td>
-                <td>2.5</td>
-                <td>N/A</td>
-                <td>5.5/10</td>
-                <td>Low</td>
-                <td>2$</td>
-                <td>N/A</td>
+    <td>Blue Splash</td>
+    <td class="value-mid">22</td>
+    <td class="na">N/A</td>
+    <td class="demand-7">7/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$20</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td>Jinx</td>
+    <td class="value-mid">23</td>
+    <td class="na">N/A</td>
+    <td class="demand-6">6.5/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$20</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td>Blood Radiant</td>
+    <td class="value-mid">23</td>
+    <td class="value-low">8-11</td>
+    <td class="demand-7">7.5/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$20</td>
+    <td class="sales-low">$8-10</td>
+</tr>
+<tr>
+     <td>Eternal</td>
+                <td class="value-mid">26</td>
+                <td class="value-low">5-6</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-mid">Mid</td>
+                <td class="sales-low">$23</td>
+                <td class="sales-low">$5</td>
             </tr>
             <tr>
-                <td>Animated Wings</td>
-                <td>2</td>
-                <td>N/A</td>
-                <td>5.5/10</td>
-                <td>Low</td>
-                <td>2$</td>
-                <td>N/A</td>
+                <td>Fracture</td>
+                <td class="value-mid">26</td>
+                <td class="value-low">5-6</td>
+                <td class="demand-7">7/10</td>
+                <td class="rarity-mid">Mid</td>
+                <td class="sales-low">$23</td>
+                <td class="sales-low">$5</td>
             </tr>
             <tr>
-                <td>Neon Wings</td>
-                <td>2</td>
-                <td>N/A</td>
-                <td>5.5/10</td>
-                <td>Low</td>
-                <td>2$</td>
-                <td>N/A</td>
-            </tr>
-        </tbody>
-    </table>
+    <td>Envy</td>
+    <td class="value-mid">26</td>
+    <td class="na">N/A</td>
+    <td class="demand-7">7.5/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$23</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td>Insomnia</td>
+    <td class="value-mid">28</td>
+    <td class="na">N/A</td>
+    <td class="demand-8">8/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-low">$25</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td>Dracula</td>
+    <td class="value-mid">30</td>
+    <td class="na">N/A</td>
+    <td class="demand-7">7.5/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$25</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td>Cyclone</td>
+    <td class="value-mid">38</td>
+    <td class="na">N/A</td>
+    <td class="demand-8">8/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-mid">$30</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td class="name">Miracle</td>
+    <td class="value-mid">40</td>
+    <td class="sales-mid">20</td>
+    <td class="demand-7">7.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-mid">$30</td>
+    <td class="sales-low">$15</td>
+</tr>
+<tr>
+    <td class="name">Grime</td>
+    <td class="value-mid">60</td>
+    <td class="sales-mid">50</td>
+    <td class="demand-7">7.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-mid">$40</td>
+    <td class="sales-mid">$35</td>
+</tr>
+<tr>
+    <td class="name">Hyperion</td>
+    <td class="value-mid">65</td>
+    <td class="na">N/A</td>
+    <td class="demand-8">8/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-mid">$45</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td class="name">Mellow</td>
+    <td class="value-mid">65</td>
+    <td class="sales-mid">8-11</td>
+    <td class="demand-7">7.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-mid">$45</td>
+    <td class="sales-low">$8-10</td>
+</tr>
+<tr>
+    <td class="name">Luminance</td>
+    <td class="value-mid">75</td>
+    <td class="na">N/A</td>
+    <td class="demand-8">8.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-mid">$50</td>
+    <td class="na">N/A</td>
+</tr>
+<tr>
+    <td class="name">Ghoul</td>
+    <td class="value-mid">80</td>
+    <td class="sales-mid">85</td>
+    <td class="demand-8">8.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-mid">$55</td>
+    <td class="sales-mid">$60</td>
+</tr>
+<tr>
+    <td class="name">Supernova</td>
+    <td class="value-mid">85</td>
+    <td class="sales-mid">36</td>
+    <td class="demand-7">7.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-mid">$55</td>
+    <td class="sales-mid">$30</td>
+</tr>
+<tr>
+    <td class="name">Equinox</td>
+    <td class="value-mid">85</td>
+    <td class="na">N/A</td>
+    <td class="demand-8">8.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-mid">$60</td>
+    <td class="na">N/A</td>
+</tr>
+  <tr>
+            <td class="name">Sea of Voices</td>
+            <td class="value-high">130</td>
+            <td class="na">N/A</td>
+            <td class="demand-8">8/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-high">90$</td>
+            <td class="na">N/A</td>
+        </tr>
+        <tr>
+            <td class="name">Permafrost</td>
+            <td class="value-high">160</td>
+            <td class="na">N/A</td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-high">100$</td>
+            <td class="na">N/A</td>
+        </tr>
+        <tr>
+            <td class="name">Neptune</td>
+            <td class="value-high">180</td>
+            <td class="value-high">190</td>
+            <td class="demand-8">8/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-high">110$</td>
+            <td class="sales-high">115$</td>
+        </tr>
+        <tr>
+            <td class="name">Radiant 2</td>
+            <td class="value-high">220</td>
+            <td class="na">N/A</td>
+            <td class="demand-7">7.5/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-high">120$</td>
+            <td class="na">N/A</td>
+        </tr>
+        <tr>
+            <td class="name">Lovely Azure</td>
+            <td class="value-high">260</td>
+            <td class="value-high">320</td>
+            <td class="demand-7">7.5/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-high">140$</td>
+            <td class="sales-extreme">180$</td>
+        </tr>
+        <tr>
+            <td class="name">Corrupt</td>
+            <td class="na">N/A</td>
+            <td class="value-high">250-350</td>
+            <td class="demand-8">8/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-high">140-180$</td>
+            <td class="na">N/A</td>
+        </tr>
+        <tr>
+            <td class="name">Vampire</td>
+            <td class="na">N/A</td>
+            <td class="value-high">250-350</td>
+            <td class="demand-8">8/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-high">140-180$</td>
+            <td class="na">N/A</td>
+        </tr>
+        <tr>
+            <td class="name">Aureus</td>
+            <td class="value-high">350</td>
+            <td class="value-high">350-450</td>
+            <td class="demand-7">7.5/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-extreme">180$</td>
+            <td class="sales-extreme">180-220$</td>
+        </tr>
+        <tr>
+            <td class="name">Eerie</td>
+            <td class="value-extreme">550</td>
+            <td class="value-high">340</td>
+            <td class="demand-8">8.5/10</td>
+            <td class="rarity-extreme">Extreme</td>
+            <td class="sales-extreme">260$</td>
+            <td class="sales-high">160$</td>
+        </tr>
+        <tr>
+            <td class="name">Keqing</td>
+            <td class="value-extreme">700</td>
+            <td class="value-extreme">700-1100</td>
+            <td class="demand-8">8.5/10</td>
+            <td class="rarity-extreme">Extreme</td>
+            <td class="sales-extreme">320$</td>
+            <td class="sales-extreme">300-450$</td>
+        </tr>
+        <tr>
+            <td class="name">La Lune</td>
+            <td class="value-extreme">1200</td>
+            <td class="value-extreme">700-1000</td>
+            <td class="demand-8">8/10</td>
+            <td class="rarity-extreme">Extreme</td>
+            <td class="sales-extreme">500$</td>
+            <td class="sales-extreme">300-400$</td>
+        </tr>
+    </tbody>
+</table>
 
-  <h2>Animations</h2>
-    <table>
-        <thead>
+<h2>Chairs</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Value (OG)</th>
+            <th>Value (Tag/Serial)</th>
+            <th>Demand</th>
+            <th>Rarity</th>
+            <th>Sales (OG)</th>
+            <th>Sales (Tag/Serial)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="name">Legacy</td>
+            <td class="na">N/A</td>
+            <td class="na">N/A</td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-extreme">Extreme</td>
+            <td class="na">N/A</td>
+            <td class="na">N/A</td>
+        </tr>
+        <tr>
+            <td class="name">Royal Red</td>
+            <td class="value-high">230</td>
+            <td class="value-mid">50</td>
+            <td class="demand-6">6.5/10</td>
+            <td class="rarity-extreme">Extreme</td>
+            <td class="sales-high">$130</td>
+            <td class="sales-mid">$35</td>
+        </tr>
+        <tr>
+            <td class="name">Festive Devil</td>
+            <td class="value-high">220</td>
+            <td class="value-mid">30-40</td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-extreme">Extreme</td>
+            <td class="sales-high">$120</td>
+            <td class="sales-mid">$30</td>
+        </tr>
+        <tr>
+            <td class="name">Dusk</td>
+            <td class="value-high">140</td>
+            <td class="value-high">100-150</td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-mid">$90</td>
+            <td class="sales-high">$70-100</td>
+        </tr>
+        <tr>
+            <td class="name">Hallow</td>
+            <td class="value-mid">75</td>
+            <td class="value-mid">30</td>
+            <td class="demand-6">6.5/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-mid">$50</td>
+            <td class="sales-low">$25</td>
+        </tr>
+        <tr>
+            <td class="name">RGB Devil</td>
+            <td class="value-mid">45</td>
+            <td class="na">N/A</td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-mid">Mid</td>
+            <td class="sales-mid">$35</td>
+            <td class="na">N/A</td>
+        </tr>
+<tr>
+            <td class="name">Vibrant</td>
+            <td class="value-mid">40</td>
+            <td class="value-mid">30</td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-mid">$30</td>
+            <td class="sales-low">$25</td>
+        </tr>
+        <tr>
+            <td class="name">Blossom</td>
+            <td class="value-mid">30</td>
+            <td class="value-low">7</td>
+            <td class="demand-6">6.5/10</td>
+            <td class="rarity-mid">Mid</td>
+            <td class="sales-low">$25</td>
+            <td class="sales-low">$5</td>
+        </tr>
+        <tr>
+            <td class="name">Rosa Devil</td>
+            <td class="value-mid">30</td>
+            <td class="na">N/A</td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-mid">Mid</td>
+            <td class="sales-low">$25</td>
+            <td class="na">N/A</td>
+        </tr>
+        <tr>
+            <td class="name">Seafoam</td>
+            <td class="value-mid">20</td>
+            <td class="na">N/A</td>
+            <td class="demand-6">6.5/10</td>
+            <td class="rarity-mid">Mid</td>
+            <td class="sales-low">$15</td>
+            <td class="na">N/A</td>
+        </tr>
+        <tr>
+            <td class="name">Decay</td>
+            <td class="value-mid">20</td>
+            <td class="value-low">5</td>
+            <td class="demand-6">6.5/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-low">$15</td>
+            <td class="sales-low">$4</td>
+        </tr>
+        <tr>
+            <td class="name">Royal Blue</td>
+            <td class="value-mid">20</td>
+            <td class="value-low">4</td>
+            <td class="demand-6">6.5/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-low">$15</td>
+            <td class="sales-low">$4</td>
+        </tr>
+        <tr>
             <tr>
-                <th>Item</th>
-                <th>Value (OG)</th>
-                <th>Value (Tag)</th>
-                <th>Demand</th>
-                <th>Rarity</th>
-                <th>Sales (OG)</th>
-                <th>Sales (Tag)</th>
+    <td class="name">Fragrant</td>
+    <td class="value-low">16</td>
+    <td class="value-low">11</td>
+    <td class="demand-6">6.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-low">$10</td>
+    <td class="sales-low">$8</td>
+</tr>
+<tr>
+    <td class="name">Forest Devil</td>
+    <td class="value-low">13</td>
+    <td class="value-low">5</td>
+    <td class="demand-6">6.5/10</td>
+    <td class="rarity-high">High</td>
+    <td class="sales-low">$10</td>
+    <td class="sales-low">$5</td>
+</tr>
+<tr>
+    <td class="name">Storm</td>
+    <td class="value-low">12</td>
+    <td class="value-low">7</td>
+    <td class="demand-6">6.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-og">$9</td>
+    <td class="sales-low">$6</td>
+</tr>
+<tr>
+    <td class="name">Swamp</td>
+    <td class="value-low">11</td>
+    <td class="value-low">6</td>
+    <td class="demand-6">6.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-low">$8</td>
+    <td class="sales-low">$5</td>
+</tr>
+<tr>
+    <td class="name">Cupid</td>
+    <td class="value-low">11</td>
+    <td class="value-low">6</td>
+    <td class="demand-6">6.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-low">$8</td>
+    <td class="sales-low">$5</td>
+</tr>
+                <td class="name">Gingerbread</td>
+                <td class="value-low">10</td>
+                <td class="value-low">3</td>
+                <td class="demand-6">6/10</td>
+                <td class="rarity-extreme">Extreme</td>
+                <td class="sales-low">$8</td>
+                <td class="sales-low">$3</td>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Levitating</th>
-                <th>110</th>
-                <th>N/A</th>
-                <th>7.5/10</th>
-                <th>High</th>
-                <th>80$</th>
-                <th>N/A</th>
-            </tr>
-            <tr>
-                <th>Slouch 2</th>
-                <th>1.5</th>
-                <th>N/A</th>
-                <th>6/10</th>
-                <th>Low</th>
-                <th>1.5$</th>
-                <th>N/A</th>
-            </tr>
-            <tr>
-                <th>Rebel</th>
-                <th>0.5</th>
-                <th>N/A</th>
-                <th>5/10</th>
-                <th>Low</th>
-                <th>0.5$</th>
-                <th>N/A</th>
-            </tr>
-        </tbody>
-    </table>
+           <tr>
+    <td class="name">Frost Devil</td>
+    <td class="value-low">9</td>
+    <td class="value-low">4</td>
+    <td class="demand-6">6.5/10</td>
+    <td class="rarity-mid">Mid</td>
+    <td class="sales-low">$7</td>
+    <td class="sales-low">$3</td>
+</tr>
+<tr>
+    <td class="name">Lovesick</td>
+    <td class="value-low">8</td>
+    <td class="value-low">4</td>
+    <td class="demand-6">6/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$6</td>
+    <td class="sales-low">$4</td>
+</tr>
+<tr>
+    <td class="name">Cursed</td>
+    <td class="value-low">7</td>
+    <td class="value-low">4</td>
+    <td class="demand-6">6/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$5</td>
+    <td class="sales-low">$3</td>
+</tr>
+<tr>
+    <td class="name">Shore</td>
+    <td class="value-low">6</td>
+    <td class="value-na"><strong>N/A</strong></td>
+    <td class="demand-6">6/10</td>
+    <td class="rarity-low">Low</td>
+    <td class="sales-low">$5</td>
+    <td class="sales-na"><strong>N/A</strong></td>
+</tr>
+<tr>
+    <td class="name">Christmas</td>
+    <td class="value-low">6</td>
+    <td class="value-na"><strong>N/A</strong></td>
+    <td class="demand-6">6/10</td>
+    <td class="rarity-extreme">Extreme</td>
+    <td class="sales-low">$5</td>
+    <td class="sales-na"><strong>N/A</strong></td>
+</tr>
+<tr>
+    <td class="name">Lantern</td>
+    <td class="value-low">5</td>
+    <td class="value-na"><strong>N/A</strong></td>
+    <td class="demand-6">6/10</td>
+    <td class="rarity-extreme">Extreme</td>
+    <td class="sales-low">$4</td>
+    <td class="sales-na"><strong>N/A</strong></td>
+</tr>
+<tr>
+    <td class="name">Pumpkin</td>
+    <td class="value-low">5</td>
+    <td class="value-na"><strong>N/A</strong></td>
+    <td class="demand-6">6/10</td>
+    <td class="rarity-extreme">Extreme</td>
+    <td class="sales-low">$4</td>
+    <td class="sales-na"><strong>N/A</strong></td>
+       </tr>
+  </tbody> 
+ </table>
+ 
+ <h2 class="category">Accessories</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Value (OG)</th>
+            <th>Value (Tag)</th>
+            <th>Demand</th>
+            <th>Rarity</th>
+            <th>Sales (OG)</th>
+            <th>Sales (Tag)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="name">RGB Antlers</td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="demand-unknown">idk lol</td>
+            <td class="rarity-extreme">Extreme</td>
+            <td class="sales-na"><strong>N/A</strong></td>
+            <td class="sales-na"><strong>N/A</strong></td>
+        </tr>
+        <tr>
+            <td class="name">RGB Wings</td>
+            <td class="value-low">11</td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-low">Low</td>
+            <td class="sales-low">9$</td>
+            <td class="sales-na"><strong>N/A</strong></td>
+        </tr>
+        <tr>
+            <td class="name">8-BIT</td>
+            <td class="value-low">6.5</td>
+            <td class="value-low">3</td>
+            <td class="demand-6">6.5/10</td>
+            <td class="rarity-mid">Mid</td>
+            <td class="sales-low">5$</td>
+            <td class="sales-low">3$</td>
+        </tr>
+        <tr>
+            <td class="name">Mono Wings</td>
+            <td class="value-low">5</td>
+            <td class="value-low">3</td>
+            <td class="demand-6">6/10</td>
+            <td class="rarity-low">Low</td>
+            <td class="sales-low">5$</td>
+            <td class="sales-low">3$</td>
+        </tr>
+        <tr>
+            <td class="name">Bat Guard</td>
+            <td class="value-low">2.5</td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="demand-5">5.5/10</td>
+            <td class="rarity-low">Low</td>
+            <td class="sales-low">2$</td>
+            <td class="sales-na"><strong>N/A</strong></td>
+        </tr>
+        <tr>
+            <td class="name">Animated Wings</td>
+            <td class="value-low">2</td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="demand-5">5.5/10</td>
+            <td class="rarity-low">Low</td>
+            <td class="sales-low">2$</td>
+            <td class="sales-na"><strong>N/A</strong></td>
+        </tr>
+        <tr>
+            <td class="name">Neon Wings</td>
+            <td class="value-low">2</td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="demand-5">5.5/10</td>
+            <td class="rarity-low">Low</td>
+            <td class="sales-low">2$</td>
+            <td class="sales-na"><strong>N/A</strong></td>
+        </tr>
+    </tbody>
+</table>
 
- <h2>Effects</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Value (OG)</th>
-                <th>Value (Tag)</th>
-                <th>Demand</th>
-                <th>Rarity</th>
-                <th>Sales (OG)</th>
-                <th>Sales (Tag)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Display</td>
-                <td>45</td>
-                <td>N/A</td>
-                <td>7/10</td>
-                <td>Mid</td>
-                <td>35$</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Snowfall</td>
-                <td>5</td>
-                <td>3</td>
-                <td>7/10</td>
-                <td>Mid</td>
-                <td>5$</td>
-                <td>3$</td>
-            </tr>
-        </tbody>
-    </table>
+<h2 class="category">Animations</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Value (OG)</th>
+            <th>Value (Tag)</th>
+            <th>Demand</th>
+            <th>Rarity</th>
+            <th>Sales (OG)</th>
+            <th>Sales (Tag)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="name">Levitating</td>
+            <td class="value-high">110</td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="demand-7">7.5/10</td>
+            <td class="rarity-high">High</td>
+            <td class="sales-high">80$</td>
+            <td class="sales-na"><strong>N/A</strong></td>
+        </tr>
+        <tr>
+            <td class="name">Slouch 2</td>
+            <td class="value-low">1.5</td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="demand-6">6/10</td>
+            <td class="rarity-low">Low</td>
+            <td class="sales-low">1.5$</td>
+            <td class="sales-na"><strong>N/A</strong></td>
+        </tr>
+        <tr>
+            <td class="name">Rebel</td>
+            <td class="value-low">0.5</td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="demand-5">5/10</td>
+            <td class="rarity-low">Low</td>
+            <td class="sales-low">0.5$</td>
+            <td class="sales-na"><strong>N/A</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="category">Effects</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Value (OG)</th>
+            <th>Value (Tag)</th>
+            <th>Demand</th>
+            <th>Rarity</th>
+            <th>Sales (OG)</th>
+            <th>Sales (Tag)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="name">Display</td>
+            <td class="value-mid">45</td>
+            <td class="value-na"><strong>N/A</strong></td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-mid">Mid</td>
+            <td class="sales-mid">35$</td>
+            <td class="sales-na"><strong>N/A</strong></td>
+        </tr>
+        <tr>
+            <td class="name">Snowfall</td>
+            <td class="value-low">5</td>
+            <td class="value-low">3</td>
+            <td class="demand-7">7/10</td>
+            <td class="rarity-mid">Mid</td>
+            <td class="sales-low">5$</td>
+            <td class="sales-low">3$</td>
+        </tr>
+    </tbody>
+</table>
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Values</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            display: block;
+        }
+        th, td {
+            padding: 10px 15px;
+            border: 1px solid #444;
+            text-align: center;
+        }
+        th {
+            background-color: #222;
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        td {
+            background-color: #333;
+            color: #ffffff;
+        }
+        .recommendations {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            border-left: 6px solid #ffcc00;
+            box-shadow: 0px 0px 15px rgba(255, 204, 0, 0.5);
+        }
+        .recommendations h2 {
+            color: #ffcc00;
+            text-align: center;
+            text-decoration: underline;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .recommendations p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #222;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(255, 204, 0, 0.3);
+        }
+        .footer p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .footer .name {
+            color: #ffcc00;
+        }
+        .footer .updated {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        .footer .date {
+            color: #ff6699;
+            font-size: 18px;
+        }
+        .final-message {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6699;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
     </table>
 
     <!-- Recommendations Section -->
     <div class="recommendations">
-        <h2 style="color: #ffcc00; text-align: center; text-decoration: underline;">Recommendations</h2>
+        <h2>Recommendations</h2>
         <p><strong>• Always go by RAP/Demand</strong> (easy to trade/sell)</p>
         <p><strong>• Higher demand = Possible Overpays = Good Reputation</strong></p>
         <p><strong>• Low Demand = Possible Underpays = Bad Reputation</strong></p>
@@ -892,7 +1032,7 @@
 
     <!-- Notes Section -->
     <div class="recommendations">
-        <h2 style="color: #ffcc00; text-align: center; text-decoration: underline;">Notes</h2>
+        <h2>Notes</h2>
         <p><strong>• N/A stands for Not Available</strong> (means it's either not detected or doesn't exist)</p>
         <p><strong>• There is no Tag/Serial RGB Eternal</strong>, value stands for the stocking version</p>
         <p><strong>• <span style="color: red;">Extreme</span> Rarity</strong> items are related to the OG versions of them</p>
@@ -909,19 +1049,20 @@
         <p><strong>• Crafting a Divine will get you the <span style="color: red;">Tag</span> version no matter what</strong></p>
     </div>
 
-    <!-- Collectibles Section -->
+    <!-- Coming Soon Section -->
     <div class="recommendations">
-        <h2 style="color: #ffcc00; text-align: center; text-decoration: underline;">Coming Soon...</h2>
+        <h2>Coming Soon...</h2>
         <p style="text-align: center; font-weight: bold; font-size: 18px;">Collectibles (Legendary Knives) Section...?</p>
     </div>
 
     <!-- Footer with Name & Date -->
-    <div style="text-align: center; margin-top: 30px; padding: 15px; background-color: #222; color: white; border-radius: 10px;">
-        <p style="font-size: 20px; font-weight: bold;">Made By: <span style="color: #ffcc00;">Jidayne</span></p>
-        <p style="font-size: 18px;">Updated: <span style="color: #ff6699;">17/03/2025</span></p>
+    <div class="footer">
+        <p>Made By: <span class="name">Jidayne</span></p>
+        <p><span class="updated">Updated:</span> <span class="date">17/03/2025</span></p>
     </div>
 
     <!-- Final Message -->
-    <p style="text-align: center; font-size: 24px; font-weight: bold; color: #ff6699; margin-top: 20px;">Lovely time wishes for everybody 💖</p>
+    <p class="final-message">Lovely time wishes for everybody 💖</p>
 </body>
 </html>
+
