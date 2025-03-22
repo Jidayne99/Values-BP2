@@ -13,37 +13,37 @@
             text-align: center;
         }
         h1 {
-            font-size: 2em;
-            text-shadow: 0 0 10px cyan;
+            font-size: 2.5em;
+            text-shadow: 0 0 15px cyan;
         }
-        .section-buttons button, .sub-buttons button {
+        .section-buttons button, .sub-buttons button, .toggle-button {
             background: linear-gradient(45deg, blue, cyan);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             margin: 10px;
             cursor: pointer;
-            border-radius: 10px;
-            font-size: 1em;
+            border-radius: 12px;
+            font-size: 1.1em;
             transition: 0.3s;
             font-weight: bold;
+            box-shadow: 0 0 10px cyan;
         }
         .sub-buttons button {
             background: linear-gradient(45deg, orange, gold);
-            font-weight: bold;
         }
-        .section-buttons button:hover, .sub-buttons button:hover {
+        .section-buttons button:hover, .sub-buttons button:hover, .toggle-button:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 15px white;
+            box-shadow: 0 0 20px white;
         }
         .category {
             display: none;
         }
         .search-bar {
-            padding: 10px;
+            padding: 12px;
             border-radius: 5px;
             width: 60%;
-            font-size: 1em;
+            font-size: 1.1em;
         }
         table {
             width: 80%;
@@ -53,7 +53,7 @@
             border-radius: 10px;
         }
         th, td {
-            padding: 10px;
+            padding: 12px;
             border: 2px solid cyan;
             text-align: center;
             font-weight: bold;
@@ -65,12 +65,35 @@
             color: white;
         }
         .category-title {
-            font-size: 1.5em;
+            font-size: 1.8em;
             color: cyan;
-            text-shadow: 0 0 10px cyan;
+            text-shadow: 0 0 15px cyan;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+        /* Notes & Tips Styling */
+        .notes-container, .tips-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            color: cyan;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 0 0 10px cyan;
+            border: 2px solid cyan;
+            width: 80%;
+            margin: 20px auto;
+            display: none;
+        }
+        .glowing-title {
+            font-size: 1.8em;
+            color: cyan;
+            text-shadow: 0 0 15px cyan;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
         }
     </style>
 </head>
@@ -81,8 +104,8 @@
     <div class="section-buttons">
         <button onclick="showSection('value-list')">Value List</button>
         <button onclick="showSection('calculator')">Auto Calculator</button>
-        <button onclick="showSection('recommendations')">Recommendations</button>
-        <button onclick="showSection('notes')">Notes</button>
+        <button onclick="toggleTips()">Tips</button>
+        <button onclick="toggleNotes()">Notes</button>
     </div>
 
     <h2 class="category-title">Value List</h2>
@@ -97,47 +120,68 @@
         <button onclick="showCategory('accessories')">Accessories</button>
     </div>
 
+    <!-- Notes Section -->
+    <div class="notes-container" id="notesSection">
+        <h2 class="glowing-title">Notes</h2>
+        <p><strong>• N/A stands for Not Available</strong> (means it's either not detected or doesn't exist).</p>
+        <p><strong>• No Tag/Serial RGB Eternal</strong> (value stands for the stocking version).</p>
+        <p><strong>• Extreme Rarity</strong> items are related to the OG versions of them.</p>
+        <p><strong>• Tag item = item with date, OG = item with no date</strong> (first-time released).</p>
+        <p><strong>• Serial Items + Copies number</strong> (OG copies are not included).</p>
+        <p><strong>• Knives:</strong> La Lune 9, Keqing 5, Aureus 11, Corrupt 25, Vampire 25, Equinox 1.</p>
+        <p><strong>• Chairs:</strong> Dusk 5.</p>
+        <p><strong>• Corrupt + Vampire exist only in Serial.</strong></p>
+        <p><strong>• Many copies were banned/offline for a long time</strong>, increasing rarity/availability.</p>
+        <p><strong>• Crafting a Divine will get you the Tag version no matter what.</strong></p>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="tips-container" id="tipsSection">
+        <h2 class="glowing-title">Trading Tips</h2>
+        <p><strong>✅ Always 20% by RAP/Demand:</strong> Easy to trade/sell.</p>
+        <p><strong>🔥 Higher demand = Possible Overpays.</strong></p>
+        <p><strong>❌ Low Demand = Possible Underpays.</strong></p>
+        <p><strong>🚫 Avoid too cheap seasonal legendaries.</strong></p>
+        <p><strong>🏆 Prioritize OGs over duplicates.</strong></p>
+        <p><strong>📆 The lower the tag item date, the more it’s worth.</strong></p>
+        <p><strong>📉 The lower the over-selling, the more it’s worth.</strong></p>
+        <p><strong>💡 Priority only applies to the buyer.</strong></p>
+        <p><strong>🔪 Prioritize Knives (Divines) over other sections.</strong></p>
+        <p><strong>⛔ Do not buy off Jupiter.</strong></p>
+        <p><strong>⚠️ Always use MM if you cross-trade.</strong></p>
+        <p><strong>📊 Value List follows RAP/Demand actively.</strong></p>
+    </div>
+
     <script>
         function showSection(sectionId) {
             if (sectionId === 'calculator') {
                 window.location.href = 'calculator.html';
                 return;
             }
-
-            let sections = document.querySelectorAll('.category');
-            sections.forEach(section => {
-                section.style.display = 'none';
-            });
-
+            document.querySelectorAll('.category').forEach(section => section.style.display = 'none');
             let selectedSection = document.getElementById(sectionId);
-            if (selectedSection) {
-                selectedSection.style.display = 'block';
-            }
+            if (selectedSection) selectedSection.style.display = 'block';
         }
 
         function showCategory(categoryId) {
-            let categories = document.querySelectorAll('.category');
-            categories.forEach(category => {
-                category.style.display = 'none';
-            });
-
+            document.querySelectorAll('.category').forEach(category => category.style.display = 'none');
             let selectedCategory = document.getElementById(categoryId);
-            if (selectedCategory) {
-                selectedCategory.style.display = 'block';
-            }
+            if (selectedCategory) selectedCategory.style.display = 'block';
         }
 
-        document.getElementById('search').addEventListener('input', function() {
-            let filter = this.value.toLowerCase();
-            document.querySelectorAll('#knives-table tr, #chairs-table tr, #accessories table tbody tr, #animations table tbody tr, #effects table tbody tr').forEach(row => {
-                let itemName = row.cells[0].textContent.toLowerCase();
-                row.style.display = itemName.startsWith(filter) ? '' : 'none';
-            });
-        });
+        function toggleNotes() {
+            let notesSection = document.getElementById("notesSection");
+            notesSection.style.display = (notesSection.style.display === "none" || notesSection.style.display === "") ? "block" : "none";
+        }
+
+        function toggleTips() {
+            let tipsSection = document.getElementById("tipsSection");
+            tipsSection.style.display = (tipsSection.style.display === "none" || tipsSection.style.display === "") ? "block" : "none";
+        }
     </script>
 </body>
 </html>
-    <div id="guns" class="category">
+ <div id="guns" class="category">
         <h2 class="category-title">Guns</h2>
         <table>
             <thead>
@@ -1037,149 +1081,4 @@ document.getElementById('search').addEventListener('input', function() {
     });
 });
 </script>
-
- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Values</title>
-    <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            display: block;
-        }
-        th, td {
-            padding: 10px 15px;
-            border: 1px solid #444;
-            text-align: center;
-        }
-        th {
-            background-color: #222;
-            color: #ffcc00;
-            font-weight: bold;
-        }
-        td {
-            background-color: #333;
-            color: #ffffff;
-        }
-        .recommendations {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #1a1a1a;
-            border-radius: 10px;
-            border-left: 6px solid #ffcc00;
-            box-shadow: 0px 0px 15px rgba(255, 204, 0, 0.5);
-        }
-        .recommendations h2 {
-            color: #ffcc00;
-            text-align: center;
-            text-decoration: underline;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        .recommendations p {
-            font-size: 16px;
-            line-height: 1.6;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #222;
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(255, 204, 0, 0.3);
-        }
-        .footer p {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .footer .name {
-            color: #ffcc00;
-        }
-        .footer .updated {
-            font-weight: bold;
-            color: #ffcc00;
-        }
-        .footer .date {
-            color: #ff6699;
-            font-size: 18px;
-        }
-        .final-message {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff6699;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-
-    </table>
-
-    <!-- Recommendations Section -->
-    <div class="recommendations">
-        <h2>Recommendations</h2>
-        <p><strong>• Always go by RAP/Demand</strong> (easy to trade/sell)</p>
-        <p><strong>• Higher demand = Possible Overpays = Good Reputation</strong></p>
-        <p><strong>• Low Demand = Possible Underpays = Bad Reputation</strong></p>
-        <p><strong>• Avoid super low-valued <span style="color: red;">Tag</span> items</strong></p>
-        <p><strong>• Prioritize Ogs over Tags!</strong> (better demand)</p>
-        <p><strong>• The lower the tag item date, the more it's worth</strong> (slight)</p>
-        <p><strong>• The lower the serial, the more it's worth</strong></p>
-        <p><strong>• Overpay only applies to 7.5+ demand items</strong> (preferably slight)</p>
-        <p><strong>• Prioritize Knives (Divines) over other sections if you actively trade/buy/sell</strong></p>
-        <p><strong>• Do not buy off Jupiter</strong></p>
-        <p><strong>• Always use MM if you cross-trade</strong></p>
-        <p><strong>• Value List follows RAP/Demand Status actively, therefore it's 90% accurate + dependable</strong></p>
-        <p style="color: #00ff00; font-size: 18px; font-weight: bold;">• Buy off me :)</p>
-    </div>
-
-    <!-- Notes Section -->
-    <div class="recommendations">
-        <h2>Notes</h2>
-        <p><strong>• N/A stands for Not Available</strong> (means it's either not detected or doesn't exist)</p>
-        <p><strong>• There is no Tag/Serial RGB Eternal</strong>, value stands for the stocking version</p>
-        <p><strong>• <span style="color: red;">Extreme</span> Rarity</strong> items are related to the OG versions of them</p>
-        <p><strong>• Tag item = item with date</strong>, OG = item with no date (first-time released)</p>
-        <p><strong>• Serial Items + Copies number</strong> (OG copies are not included)</p>
-        
-        <ul>
-            <li><strong>Knives:</strong> La Lune 9, Keqing 5, Aureus 11, Corrupt 25, Vampire 25, Equinox 1</li>
-            <li><strong>Chairs:</strong> Dusk 5</li>
-        </ul>
-        
-        <p><strong>• Corrupt + Vampire exist only in Serial</strong></p>
-        <p><strong>• Many copies were banned/offline for a long time, increasing rarity/availability</strong></p>
-        <p><strong>• Crafting a Divine will get you the <span style="color: red;">Tag</span> version no matter what</strong></p>
-    </div>
-
-    <!-- Coming Soon Section -->
-    <div class="recommendations">
-        <h2>Coming Soon...</h2>
-        <p style="text-align: center; font-weight: bold; font-size: 18px;">Collectibles (Legendary Knives) Section...?</p>
-    </div>
-
-    <!-- Footer with Name & Date -->
-    <div class="footer">
-        <p>Made By: <span class="name">Jidayne</span></p>
-        <p><span class="updated">Updated:</span> <span class="date">17/03/2025</span></p>
-    </div>
-
-    <!-- Final Message -->
-    <p class="final-message">Lovely time wishes for everybody 💖</p>
-</body>
-</html>
 
