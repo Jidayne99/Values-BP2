@@ -45,25 +45,44 @@
             width: 60%;
             font-size: 1.1em;
         }
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 10px;
-        }
-        th, td {
-            padding: 12px;
-            border: 2px solid cyan;
-            text-align: center;
-            font-weight: bold;
-            color: #e0ffff;
-            text-shadow: 0 0 5px #e0ffff;
-        }
-        th {
-            background: blue;
-            color: white;
-        }
+   table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    font-family: Arial, sans-serif; /* Normal font */
+}
+
+/* Table headers */
+th {
+    background: blue;
+    color: white;
+    text-shadow: 0 0 10px white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 12px;
+}
+
+/* Table cells */
+td {
+    padding: 12px;
+    border: 2px solid cyan;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff; /* Pure white */
+    text-shadow: 0 0 8px #ffffff; /* Soft neon glow */
+    font-size: 1.1em;
+    font-family: Arial, sans-serif; /* Normal text */
+}
+
+/* Make numbers look the same but with a slight glow */
+td:nth-child(n) {
+    font-weight: bold;
+    color: #f0f8ff; /* Soft neon white */
+    text-shadow: 0 0 10px #f0f8ff;
+    font-family: Arial, sans-serif; /* Normal font for numbers too */
+}
         .category-title {
             font-size: 1.8em;
             color: cyan;
@@ -138,14 +157,14 @@
     <!-- Tips Section -->
     <div class="tips-container" id="tipsSection">
         <h2 class="glowing-title">Trading Tips</h2>
-        <p><strong>✅ Always 20% by RAP/Demand:</strong> Easy to trade/sell.</p>
-        <p><strong>🔥 Higher demand = Possible Overpays.</strong></p>
-        <p><strong>❌ Low Demand = Possible Underpays.</strong></p>
-        <p><strong>🚫 Avoid too cheap seasonal legendaries.</strong></p>
-        <p><strong>🏆 Prioritize OGs over duplicates.</strong></p>
+        <p><strong>✅ Always trade for RAP/Demand:</strong> Easy to trade/sell.</p>
+        <p><strong>🔥 High demand = Possible Overpays.</strong></p>
+        <p><strong>❌ Low demand = Possible Underpays.</strong></p>
+        <p><strong>🚫 Avoid super low seasonal legendaries.</strong></p>
+        <p><strong>🏆 Prioritize OGs over Tags.</strong></p>
         <p><strong>📆 The lower the tag item date, the more it’s worth.</strong></p>
-        <p><strong>📉 The lower the over-selling, the more it’s worth.</strong></p>
-        <p><strong>💡 Priority only applies to the buyer.</strong></p>
+        <p><strong>📉 The lower the serial, the more it’s worth.</strong></p>
+        <p><strong>💡 Overpays only apply to 8+ Demand.</strong></p>
         <p><strong>🔪 Prioritize Knives (Divines) over other sections.</strong></p>
         <p><strong>⛔ Do not buy off Jupiter.</strong></p>
         <p><strong>⚠️ Always use MM if you cross-trade.</strong></p>
@@ -374,7 +393,7 @@
             </tr>
             <tr>
                 <td>Infinite</td>
-                <td>21</td>
+                <td>20</td>
                 <td>6-10</td>
                 <td>7/10</td>
                 <td>Mid</td>
@@ -383,7 +402,7 @@
             </tr>
             <tr>
                 <td>Radiant</td>
-                <td>22</td>
+                <td>21</td>
                 <td>5-6</td>
                 <td>7/10</td>
                 <td>Mid</td>
@@ -933,7 +952,7 @@ document.getElementById('search').addEventListener('input', function() {
             </tr>
             <tr>
                 <td class="name">8-BIT</td>
-                <td class="value-low">6.5</td>
+                <td class="value-low">6</td>
                 <td class="value-low">3</td>
                 <td class="demand-6">6.5/10</td>
                 <td class="rarity-mid">Mid</td>
