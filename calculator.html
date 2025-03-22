@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 2em;
+            text-shadow: 0 0 10px cyan;
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        input[type="text"], select {
+            padding: 10px;
+            border-radius: 5px;
+            width: 60%;
+            font-size: 1em;
+            background-color: #333;
+            color: white;
+            border: 1px solid cyan;
+            margin: 10px auto;
+        }
+        button {
+            background: linear-gradient(45deg, blue, cyan);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px white;
+        }
+        #result, #analysis {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        /* Neon glow effect */
+        input[type="text"], select, button {
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <h1>Trade Calculator</h1>
+
+    <label for="tradingItem">Trading Item:</label>
+    <input type="text" id="tradingItem" name="tradingItem">
+    <select id="tradingItemType">
+        <option value="og">OG</option>
+        <option value="tag">Tag/Serial</option>
+    </select>
+
+    <label for="forItem">For Item:</label>
+    <input type="text" id="forItem" name="forItem">
+    <select id="forItemType">
+        <option value="og">OG</option>
+        <option value="tag">Tag/Serial</option>
+    </select>
+
+    <button onclick="calculateTrade()">Calculate Trade</button>
+
+    <div id="result"></div>
+    <div id="analysis"></div>
+
+    <script>
+        // Item data (replace with your actual data)
+        const itemData = {
+            "Cyclone": { og: { value: 500, demand: 8 }, tag: { value: 400, demand: 6 } },
+            "Blood Radiant": { tag: { value: 600, demand: 9 } },
+            // Add more items and their data here
+        };
+
+        function calculateTrade() {
+            const tradingItemName = document.getElementById('tradingItem').value;
+            const tradingItemType = document.getElementById('tradingItemType').value;
+            const forItemName = document.getElementById('forItem').value;
+            const forItemType = document.getElementById('forItemType').value;
+
+            // Lookup item data
+            const tradingItem = itemData[tradingItemName] && itemData[tradingItemName][tradingItemType];
+            const forItem = itemData[forItemName] && itemData[forItemName][forItemType];
+
+            if (!tradingItem || !forItem) {
+                document.getElementById('result').textContent = "Item(s) not found.";
+                return;
+            }
+
+            // Trade evaluation logic (replace with your logic)
+            const tradingValue = tradingItem.value * tradingItem.demand;
+            const forValue = forItem.value * forItem.demand;
+
+            let outcome = "";
+            let analysis = "";
+            let outcomeColor = "";
+
+            if (forValue > tradingValue) {
+                outcome = "Win";
+                analysis = "You got a good trade.";
+                outcomeColor = "green";
+            } else if (forValue === tradingValue) {
+                outcome = "Fair";
+                analysis = "This trade is fair.";
+                outcomeColor = "yellow";
+            } else {
+                outcome = "Lose";
+                analysis = "This trade is not good.";
+                outcomeColor = "red";
+            }
+
+            document.getElementById('result').innerHTML = `<span style='color: ${outcomeColor};'>Result: ${outcome}</span>`;
+            document.getElementById('analysis').textContent = `Analysis: ${analysis}`;
+        }
+    </script>
+</body>
+</html>
