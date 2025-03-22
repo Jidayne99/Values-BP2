@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trade Calculator</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             background-color: black;
@@ -12,19 +13,19 @@
             font-family: 'Orbitron', sans-serif;
             text-align: center;
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
         h1 {
             font-size: 2em;
             text-shadow: 0 0 10px cyan;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
         label {
             display: block;
-            margin-top: 20px;
-            font-size: 1.2em;
+            margin-top: 15px;
+            font-size: 1.1em;
         }
-        input[type="text"], select {
+        input[type="text"], input[type="number"], select {
             padding: 10px;
             border-radius: 5px;
             width: 60%;
@@ -32,22 +33,24 @@
             background-color: #333;
             color: white;
             border: 1px solid cyan;
-            margin: 10px auto;
+            margin: 5px auto 15px;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
         }
         button {
             background: linear-gradient(45deg, blue, cyan);
             color: white;
             border: none;
             padding: 10px 20px;
-            margin: 20px;
+            margin-top: 20px;
             cursor: pointer;
             border-radius: 10px;
             font-size: 1em;
             transition: 0.3s;
             font-weight: bold;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.7);
         }
         button:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
             box-shadow: 0 0 15px white;
         }
         #result, #analysis {
@@ -55,9 +58,16 @@
             font-size: 1.1em;
             font-weight: bold;
         }
-        /* Neon glow effect */
-        input[type="text"], select, button {
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        input[type="text"], input[type="number"], button, select {
+            transition: box-shadow 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="number"]:focus, button:focus, select:focus {
+            box-shadow: 0 0 20px cyan;
+        }
+        #tradeChart {
+            width: 80%;
+            height: 300px;
+            margin: 20px auto;
         }
     </style>
 </head>
@@ -66,6 +76,11 @@
 
     <label for="tradingItem">Trading Item:</label>
     <input type="text" id="tradingItem" name="tradingItem">
+    <label for="tradingValue">Value:</label>
+    <input type="number" id="tradingValue" name="tradingValue">
+    <label for="tradingDemand">Demand Rate (0-10):</label>
+    <input type="number" id="tradingDemand" name="tradingDemand" min="0" max="10">
+    <label for="tradingItemType">Item Type</label>
     <select id="tradingItemType">
         <option value="og">OG</option>
         <option value="tag">Tag/Serial</option>
@@ -73,6 +88,11 @@
 
     <label for="forItem">For Item:</label>
     <input type="text" id="forItem" name="forItem">
+    <label for="forValue">Value:</label>
+    <input type="number" id="forValue" name="forValue">
+    <label for="forDemand">Demand Rate (0-10):</label>
+    <input type="number" id="forDemand" name="forDemand" min="0" max="10">
+    <label for="forItemType">Item Type</label>
     <select id="forItemType">
         <option value="og">OG</option>
         <option value="tag">Tag/Serial</option>
@@ -83,53 +103,95 @@
     <div id="result"></div>
     <div id="analysis"></div>
 
+    <canvas id="tradeChart"></canvas>
+
     <script>
-        // Item data (replace with your actual data)
-        const itemData = {
-            "Cyclone": { og: { value: 500, demand: 8 }, tag: { value: 400, demand: 6 } },
-            "Blood Radiant": { tag: { value: 600, demand: 9 } },
-            // Add more items and their data here
-        };
+        let myChart; // Store the chart instance
 
         function calculateTrade() {
-            const tradingItemName = document.getElementById('tradingItem').value;
-            const tradingItemType = document.getElementById('tradingItemType').value;
-            const forItemName = document.getElementById('forItem').value;
-            const forItemType = document.getElementById('forItemType').value;
+            const tradingValue = parseFloat(document.getElementById('tradingValue').value);
+            const tradingDemand = parseFloat(document.getElementById('tradingDemand').value);
+            const forValue = parseFloat(document.getElementById('forValue').value);
+            const forDemand = parseFloat(document.getElementById('forDemand').value);
 
-            // Lookup item data
-            const tradingItem = itemData[tradingItemName] && itemData[tradingItemName][tradingItemType];
-            const forItem = itemData[forItemName] && itemData[forItemName][forItemType];
-
-            if (!tradingItem || !forItem) {
-                document.getElementById('result').textContent = "Item(s) not found.";
+            if (isNaN(tradingValue) || isNaN(tradingDemand) || isNaN(forValue) || isNaN(forDemand)) {
+                document.getElementById('result').textContent = "Please enter valid numbers.";
                 return;
             }
-
-            // Trade evaluation logic (replace with your logic)
-            const tradingValue = tradingItem.value * tradingItem.demand;
-            const forValue = forItem.value * forItem.demand;
 
             let outcome = "";
             let analysis = "";
             let outcomeColor = "";
 
-            if (forValue > tradingValue) {
-                outcome = "Win";
-                analysis = "You got a good trade.";
-                outcomeColor = "green";
-            } else if (forValue === tradingValue) {
-                outcome = "Fair";
-                analysis = "This trade is fair.";
-                outcomeColor = "yellow";
+            if (tradingValue === forValue) {
+                if (tradingDemand > forDemand) {
+                    outcome = "Lose";
+                    analysis = "You lost due to lower demand.";
+                    outcomeColor = "red";
+                } else if (tradingDemand < forDemand) {
+                    outcome = "Win";
+                    analysis = "You won due to higher demand.";
+                    outcomeColor = "green";
+                } else {
+                    outcome = "Fair";
+                    analysis = "Demand is equal, trade is fair.";
+                    outcomeColor = "yellow";
+                }
             } else {
-                outcome = "Lose";
-                analysis = "This trade is not good.";
-                outcomeColor = "red";
+                const demandWeight = 1.5;
+                const tradingScore = tradingValue + (tradingDemand * demandWeight);
+                const forScore = forValue + (forDemand * demandWeight);
+
+                if (forScore > tradingScore + 5) {
+                    outcome = "Win";
+                    analysis = "You got a good trade.";
+                    outcomeColor = "green";
+                } else if (Math.abs(forScore - tradingScore) <= 5) {
+                    outcome = "Fair";
+                    analysis = "This trade is fair.";
+                    outcomeColor = "yellow";
+                } else {
+                    outcome = "Lose";
+                    analysis = "This trade is not good.";
+                    outcomeColor = "red";
+                }
             }
 
             document.getElementById('result').innerHTML = `<span style='color: ${outcomeColor};'>Result: ${outcome}</span>`;
             document.getElementById('analysis').textContent = `Analysis: ${analysis}`;
+
+            // Destroy the old chart if it exists
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            const ctx = document.getElementById('tradeChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Trading Item', 'For Item'],
+                    datasets: [{
+                        label: 'Value',
+                        data: [tradingValue, forValue],
+                        backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                        borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                        borderWidth: 1
+                    }, {
+                        label: 'Demand',
+                        data: [tradingDemand, forDemand],
+                        backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                        borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 206, 86, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
     </script>
 </body>
