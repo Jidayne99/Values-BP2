@@ -1,262 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Trade Calculator</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<section id="auto-calculator" style="margin:40px auto; max-width:900px;">
 
-body {
-    background-color: #050505;
-    color: #eee;
-    font-family: 'Orbitron', sans-serif;
-    margin: 0;
-    padding: 20px;
-}
-.trade-calculator {
-    max-width: 800px;
-    margin: 0 auto;
-}
-h1 {
-    text-align: center;
-    font-size: 2em;
-    color: #0ff;
-    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
-}
-.side-title {
-    margin-bottom: 10px;
-    color: #ff8c00;
-    font-size: 1.5em;
-    text-shadow: 0 0 4px #ff8c00;
-}
-.calc-section {
-    display: flex;
-    flex-wrap: wrap;
-}
-.side {
-    flex: 1;
-    min-width: 260px;
-    margin: 10px;
-    background-color: #111;
-    padding: 10px;
-    border-radius: 8px;
-}
-.input-group {
-    margin-bottom: 10px;
-}
-.input-group input {
-    width: calc(100% - 80px);
-    padding: 8px;
-    font-size: 1em;
-    color: #0ff;
-    background-color: #222;
-    border: 1px solid #0ff;
-    border-radius: 4px;
-}
-.input-group button {
-    width: 70px;
-    margin-left: 5px;
-    padding: 8px;
-    background: linear-gradient(45deg, #00ffff, #ff8c00);
-    color: #111;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 0 0 5px #00ffff, 0 0 10px #ff8c00;
-}
-.input-group button:hover {
-    opacity: 0.8;
-}
-.item-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.item-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #222;
-    margin: 5px 0;
-    padding: 5px 10px;
-    border: 1px solid #444;
-    border-radius: 4px;
-}
-.item-list li span {
-    flex: 1;
-    color: #0ff;
-}
-.item-list li button.remove-btn {
-    background: #a00;
-    color: #fff;
-    border: none;
-    padding: 3px 6px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-.item-list li button.remove-btn:hover {
-    background: #d00;
-}
-.results {
-    margin-top: 20px;
-    text-align: center;
-}
-.results div {
-    margin: 5px 0;
-}
-.score-win { color: #0f0; }
-.score-fair { color: #ff0; }
-.score-lose { color: #f00; }
+  <h2 style="text-align:center; color:#0ff; text-shadow:0 0 8px #0ff; font-family:'Orbitron';">
+    🔮 Auto Trade Calculator
+  </h2>
 
-@media (max-width: 600px) {
-    .calc-section { flex-direction: column; }
-}
-</style>
-</head>
-<body>
-<div class="trade-calculator">
-  <h1>Trade Calculator</h1>
-  <div class="calc-section">
-    <div class="side">
-      <div class="side-title">Your Offer</div>
-      <div class="input-group">
-        <input type="text" id="your-input" list="itemsList" placeholder="Type item name">
-        <button id="add-your">Add</button>
+  <div class="trade‑grid" style="
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-top:20px;
+  ">
+    <!-- Your Offer -->
+    <div style="background:#111; padding:16px; border:2px solid #0ff; border-radius:8px;">
+      <h3 style="color:#ff8c00; text-shadow:0 0 6px #ff8c00; font-family:'Orbitron';">
+        ➤ Your Offer
+      </h3>
+      <div style="display:flex; margin-bottom:8px;">
+        <input id="your-input" list="itemList" placeholder="Type to search..."
+               style="flex:1; padding:8px; border:1px solid #0ff; border-radius:4px 0 0 4px; background:#222; color:#0ff; font-family:'Orbitron';"/>
+        <button id="add-your" style="
+          padding:8px; background:linear-gradient(45deg,#00f,#f80);
+          border:none; border-radius:0 4px 4px 0; color:#000;
+          font-weight:bold; cursor:pointer; box-shadow:0 0 5px #00f,0 0 5px #f80;
+        ">Add</button>
       </div>
-      <datalist id="itemsList">
-        <!-- Options populated via script -->
-      </datalist>
-      <ul id="your-list" class="item-list"></ul>
+      <ul id="your-list" style="list-style:none; padding:0; max-height:200px; overflow-y:auto;"></ul>
     </div>
-    <div class="side">
-      <div class="side-title">Their Offer</div>
-      <div class="input-group">
-        <input type="text" id="their-input" list="itemsList" placeholder="Type item name">
-        <button id="add-their">Add</button>
+
+    <!-- Their Offer -->
+    <div style="background:#111; padding:16px; border:2px solid #0ff; border-radius:8px;">
+      <h3 style="color:#ff8c00; text-shadow:0 0 6px #ff8c00; font-family:'Orbitron';">
+        ➤ Their Offer
+      </h3>
+      <div style="display:flex; margin-bottom:8px;">
+        <input id="their-input" list="itemList" placeholder="Type to search..."
+               style="flex:1; padding:8px; border:1px solid #0ff; border-radius:4px 0 0 4px; background:#222; color:#0ff; font-family:'Orbitron';"/>
+        <button id="add-their" style="
+          padding:8px; background:linear-gradient(45deg,#00f,#f80);
+          border:none; border-radius:0 4px 4px 0; color:#000;
+          font-weight:bold; cursor:pointer; box-shadow:0 0 5px #00f,0 0 5px #f80;
+        ">Add</button>
       </div>
-      <ul id="their-list" class="item-list"></ul>
+      <ul id="their-list" style="list-style:none; padding:0; max-height:200px; overflow-y:auto;"></ul>
     </div>
   </div>
-  <div class="results">
-    <div id="your-total">Your Total Value: 0, Demand: 0, Score: 0</div>
-    <div id="their-total">Their Total Value: 0, Demand: 0, Score: 0</div>
-    <div id="result" class="score-fair">Result: FAIR</div>
+
+  <div style="text-align:center; margin-top:24px;">
+    <button id="compare-btn" style="
+      padding:12px 24px; font-family:'Orbitron'; font-size:1rem;
+      background:linear-gradient(45deg,#0ff,#f80); color:#000;
+      border:none; border-radius:6px; cursor:pointer;
+      box-shadow:0 0 8px #0ff,0 0 8px #f80; transition:0.3s;
+    ">Analyze Trade</button>
   </div>
-</div>
+
+  <div id="result" style="
+    margin-top:24px; padding:16px; text-align:center;
+    background:#111; border:2px solid #0ff; border-radius:8px;
+    box-shadow:0 0 10px rgba(0,255,255,0.3);
+    font-family:'Orbitron'; font-size:1.2rem; color:#0ff;
+    white-space:pre-line;
+  ">Result will appear here</div>
+
+  <!-- shared datalist for autocomplete -->
+  <datalist id="itemList"></datalist>
+</section>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Item data: name, value, demand
-    const items = [
-        { name: 'Iron Sword', value: 10, demand: 50 },
-        { name: 'Steel Shield', value: 20, demand: 30 },
-        { name: 'Magic Potion', value: 5, demand: 80 },
-        { name: 'Dragon Armor', value: 50, demand: 10 },
-        { name: 'Healing Herb', value: 2, demand: 70 },
-        { name: 'Mystic Wand', value: 40, demand: 20 },
-        { name: 'Cursed Dagger', value: 15, demand: 40 },
-        { name: 'Golden Crown', value: 100, demand: 5 },
-        { name: 'Silver Ring', value: 8, demand: 60 },
-        { name: 'Legendary Bow', value: 45, demand: 25 }
-        // ... add all items from your value list here ...
-    ];
+(() => {
+  // 1) Extract every item from your existing tables:
+  const rows = document.querySelectorAll('.category table tbody tr');
+  const items = Array.from(rows).map(r => {
+    const cols = r.children;
+    const name = cols[0].textContent.trim();
+    // pick OG value if numeric, else parse tag value
+    let val = parseFloat(cols[1].textContent) || 
+              parseFloat(cols[2].textContent.replace(/[^0-9.]/g,'')) || 0;
+    const demandRaw = cols[3].textContent.trim().split('/')[0];
+    const dem = parseFloat(demandRaw) || 0;
+    return { name, value: val, demand: dem };
+  });
 
-    // Populate datalist with item names
-    const dataList = document.getElementById('itemsList');
-    items.forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.name;
-        dataList.appendChild(option);
-    });
+  // 2) Populate the datalist
+  const dl = document.getElementById('itemList');
+  items.forEach(it => {
+    const o = document.createElement('option');
+    o.value = it.name;
+    dl.appendChild(o);
+  });
 
-    const yourInput = document.getElementById('your-input');
-    const theirInput = document.getElementById('their-input');
-    const addYourBtn = document.getElementById('add-your');
-    const addTheirBtn = document.getElementById('add-their');
-    const yourListEl = document.getElementById('your-list');
-    const theirListEl = document.getElementById('their-list');
-    const yourTotalEl = document.getElementById('your-total');
-    const theirTotalEl = document.getElementById('their-total');
-    const resultEl = document.getElementById('result');
+  // 3) Setup add‐item logic
+  const yourListEl = document.getElementById('your-list');
+  const theirListEl = document.getElementById('their-list');
+  let yourItems = [], theirItems = [];
 
-    let yourItems = [];
-    let theirItems = [];
+  function addItem(side) {
+    const input = document.getElementById(side+'-input');
+    const listEl = side==='your' ? yourListEl : theirListEl;
+    const arr = side==='your' ? yourItems : theirItems;
+    const name = input.value.trim();
+    input.value = '';
+    const item = items.find(i => i.name === name);
+    if(!item) return alert('Not found: '+name);
+    if(arr.some(i=>i.name===name)) return alert('Already added');
+    arr.push(item);
+    // render list item
+    const li = document.createElement('li');
+    li.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:4px 8px;border:1px solid #444;border-radius:4px;margin:4px 0;background:#222;';
+    li.innerHTML = `<span>${item.name} &nbsp;|&nbsp; Val:${item.value} &nbsp;|&nbsp; Dem:${item.demand}</span>
+                    <button style="background:#f55;border:none;color:#fff;padding:2px 6px;cursor:pointer;">✖</button>`;
+    li.querySelector('button').onclick = () => {
+      listEl.removeChild(li);
+      const idx = arr.findIndex(x=>x.name===item.name);
+      arr.splice(idx,1);
+    };
+    listEl.appendChild(li);
+  }
 
-    function addItem(itemName, side) {
-        const list = side === 'your' ? yourItems : theirItems;
-        const listEl = side === 'your' ? yourListEl : theirListEl;
-        const input = side === 'your' ? yourInput : theirInput;
+  document.getElementById('add-your').onclick = ()=>addItem('your');
+  document.getElementById('add-their').onclick = ()=>addItem('their');
 
-        // Find item object by name (case-insensitive)
-        const item = items.find(i => i.name.toLowerCase() === itemName.toLowerCase());
-        if (!item) {
-            alert('Item not found: ' + itemName);
-            return;
-        }
-        // Prevent duplicate
-        if (list.some(i => i.name === item.name)) {
-            alert('Item already added: ' + item.name);
-            return;
-        }
-        list.push(item);
-        // Create list element
-        const li = document.createElement('li');
-        const span = document.createElement('span');
-        span.textContent = item.name;
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'x';
-        removeBtn.className = 'remove-btn';
-        removeBtn.addEventListener('click', () => {
-            listEl.removeChild(li);
-            // Remove from array and recalc
-            const idx = list.findIndex(i => i.name === item.name);
-            if (idx > -1) list.splice(idx, 1);
-            calculate();
-        });
-        li.appendChild(span);
-        li.appendChild(removeBtn);
-        listEl.appendChild(li);
-        input.value = '';
-        calculate();
+  // 4) Analyze on click
+  document.getElementById('compare-btn').onclick = () => {
+    const R = document.getElementById('result');
+    if(!yourItems.length||!theirItems.length) {
+      return R.textContent = '⚠️ Add at least one item per side.';
     }
-
-    addYourBtn.addEventListener('click', () => {
-        const name = yourInput.value.trim();
-        if (name) addItem(name, 'your');
-    });
-    addTheirBtn.addEventListener('click', () => {
-        const name = theirInput.value.trim();
-        if (name) addItem(name, 'their');
-    });
-
-    function calculate() {
-        const sumValueYour = yourItems.reduce((sum, i) => sum + i.value, 0);
-        const sumDemandYour = yourItems.reduce((sum, i) => sum + i.demand, 0);
-        const sumValueTheir = theirItems.reduce((sum, i) => sum + i.value, 0);
-        const sumDemandTheir = theirItems.reduce((sum, i) => sum + i.demand, 0);
-
-        const scoreYour = 0.7 * sumValueYour + 0.3 * sumDemandYour;
-        const scoreTheir = 0.7 * sumValueTheir + 0.3 * sumDemandTheir;
-
-        yourTotalEl.textContent = `Your Total Value: ${sumValueYour}, Demand: ${sumDemandYour}, Score: ${scoreYour.toFixed(1)}`;
-        theirTotalEl.textContent = `Their Total Value: ${sumValueTheir}, Demand: ${sumDemandTheir}, Score: ${scoreTheir.toFixed(1)}`;
-
-        // Determine WIN/FAIR/LOSE (±5% threshold for fair trade)
-        const diff = scoreYour - scoreTheir;
-        const percentDiff = Math.abs(diff) / (Math.max(scoreYour, scoreTheir) || 1);
-        if (Math.abs(diff) < 1e-6 || percentDiff < 0.05) {
-            resultEl.textContent = 'Result: FAIR';
-            resultEl.className = 'score-fair';
-        } else if (diff > 0) {
-            resultEl.textContent = 'Result: WIN';
-            resultEl.className = 'score-win';
-        } else {
-            resultEl.textContent = 'Result: LOSE';
-            resultEl.className = 'score-lose';
-        }
-    }
-});
+    // totals
+    const sum = arr => arr.reduce((s,i)=>s+i.value,0);
+    const dem = arr => arr.reduce((s,i)=>s+i.demand,0);
+    const vY = sum(yourItems), dY = dem(yourItems);
+    const vT = sum(theirItems), dT = dem(theirItems);
+    // weighted score
+    const sY = 0.7*vY + 0.3*dY;
+    const sT = 0.7*vT + 0.3*dT;
+    // partial results
+    const part = 
+      (dY>dT?'WIN':'TIE')+' in demand, '+
+      (vY>vT?'WIN':'TIE')+' in value';
+    // final
+    let final = Math.abs(sY - sT)/Math.max(sY,sT) < 0.05 ? 'FAIR'
+               : sY > sT ? 'WIN' : 'LOSE';
+    // compose display
+    const leftNames = yourItems.map(i=>i.name).join(' + ');
+    const rightNames= theirItems.map(i=>i.name).join(' + ');
+    R.innerHTML = `
+      🔹 <strong>Partial:</strong> ${part}
+      <br/>
+      🔮 <strong>Final Result:</strong><br/>
+      ${leftNames} for ${rightNames} → 
+      <span style="
+        color:${ final==='WIN'? '#0f0'
+                : final==='LOSE'? '#f00'
+                : '#ff0' };
+        font-size:1.4em;
+        text-shadow:0 0 6px;
+        ">
+        ${final}
+      </span>
+    `;
+  };
+})();
 </script>
-</body>
-</html>
