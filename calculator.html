@@ -1,252 +1,317 @@
-<!-- ===== TRADE CALCULATOR START ===== -->
-<section id="trade-calculator">
-  <h2>⚡ Smart Trade Analyzer ⚡</h2>
-  <div class="calc-wrap">
-    <div class="side">
-      <h3>Your Offer</h3>
-      <ul id="your-list" class="item-list"></ul>
-      <div class="add-row">
-        <input id="your-input" list="itemsDatalist" placeholder="Type to search…">
-        <button id="add-your">➕</button>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BP2 Auto Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-bottom: 50px;
+        }
+        .calculator-container {
+            width: 80%;
+            margin: 20px auto;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px cyan;
+        }
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 15px cyan;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            padding: 12px;
+            border-radius: 5px;
+            width: 60%;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            background-color: #333;
+            color: white;
+            border: 1px solid cyan;
+        }
+        .item-list-container {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #555;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 10px;
+            text-align: left;
+        }
+        .item-row {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #444;
+        }
+        .item-row:last-child {
+            border-bottom: none;
+        }
+        .item-checkbox {
+            margin-right: 10px;
+        }
+        .item-name {
+            flex-grow: 1;
+        }
+        .quantity-input {
+            width: 50px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #777;
+            background-color: #444;
+            color: white;
+            font-size: 1em;
+            margin-left: 10px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+        .input-group label {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: cyan;
+            text-shadow: 0 0 8px cyan;
+        }
+        .calculate-button {
+            background: linear-gradient(45deg, lime, green);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 12px;
+            font-size: 1.1em;
+            transition: 0.3s;
+            font-weight: bold;
+            box-shadow: 0 0 10px lime;
+        }
+        .calculate-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px white;
+        }
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid cyan;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .result-title {
+            font-size: 1.5em;
+            color: gold;
+            text-shadow: 0 0 10px gold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .result-text {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .win {
+            color: limegreen;
+            font-weight: bold;
+        }
+        .fair {
+            color: gold;
+            font-weight: bold;
+        }
+        .lose {
+            color: red;
+            font-weight: bold;
+        }
+        .back-button {
+            background: linear-gradient(45deg, red, orange);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: 0.3s;
+            font-weight: bold;
+            box-shadow: 0 0 8px orange;
+        }
+        .back-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px white;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Auto Trade Calculator</h1>
+        <input type="text" id="search" class="search-bar" placeholder="Search for an item...">
+
+        <div class="item-list-container" id="itemList">
+            </div>
+
+        <div class="input-group">
+            <label for="offeredValue">Your Items:</label>
+            </div>
+
+        <div class="input-group">
+            <label for="receivedValue">Their Items:</label>
+            </div>
+
+        <button class="calculate-button" onclick="calculateTrade()">Calculate Trade</button>
+
+        <div class="result-container" id="tradeResult" style="display: none;">
+            <h2 class="result-title">Trade Analysis</h2>
+            <p class="result-text"><span style="font-weight: bold;">Evaluation:</span> <span id="tradeEvaluation"></span></p>
+            <p class="result-text"><span style="font-weight: bold;">Reason:</span> <span id="evaluationReason"></span></p>
+            <p class="result-text"><span style="font-weight: bold;">Balance:</span> <span id="tradeBalance"></span></p>
+        </div>
+
+        <button class="back-button" onclick="window.location.href='index.html'">Back to Value List</button>
     </div>
-    <div class="side">
-      <h3>Their Offer</h3>
-      <ul id="their-list" class="item-list"></ul>
-      <div class="add-row">
-        <input id="their-input" list="itemsDatalist" placeholder="Type to search…">
-        <button id="add-their">➕</button>
-      </div>
-    </div>
-  </div>
-  <datalist id="itemsDatalist"></datalist>
-  <div id="result-box">
-    <p id="totals"></p>
-    <p id="verdict"></p>
-  </div>
-</section>
 
-<style>
-  /* CSS VARIABLES FOR EASY TWEAKING */
-  :root {
-    --bg1: #02030a;
-    --bg2: #0e1a2b;
-    --btn-grad: linear-gradient(45deg, #00f, #0ff);
-    --text-glow: 0 0 8px #0ff;
-  }
+    <script>
+        let allItems = [];
+        const itemListContainer = document.getElementById('itemList');
+        const searchInput = document.getElementById('search');
+        const offeredInputsContainer = document.querySelector('.input-group:nth-child(3)');
+        const receivedInputsContainer = document.querySelector('.input-group:nth-child(4)');
+        const tradeResultContainer = document.getElementById('tradeResult');
+        const tradeEvaluationDisplay = document.getElementById('tradeEvaluation');
+        const evaluationReasonDisplay = document.getElementById('evaluationReason');
+        const tradeBalanceDisplay = document.getElementById('tradeBalance');
 
-  /* Animated gradient background */
-  @keyframes bgAnim {
-    0%,100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-  #trade-calculator {
-    background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg1), var(--bg2));
-    background-size: 400% 400%;
-    animation: bgAnim 15s ease infinite;
-    border: 2px solid #0ff;
-    border-radius: 12px;
-    padding: 20px;
-    max-width: 900px;
-    margin: 40px auto;
-    color: #eee;
-    font-family: 'Orbitron', sans-serif;
-    box-shadow: 0 0 20px rgba(0,255,255,0.4);
-  }
-  #trade-calculator h2 {
-    text-align: center;
-    color: #0ff;
-    text-shadow: var(--text-glow);
-    margin-top: 0;
-  }
-  .calc-wrap {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .side {
-    flex: 1;
-    min-width: 260px;
-    background: rgba(0,0,0,0.6);
-    border: 1px solid #0ff;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 0 8px rgba(0,255,255,0.2);
-  }
-  .side h3 {
-    margin: 0 0 10px;
-    color: #ff8c00;
-    text-shadow: 0 0 6px #ff8c00;
-  }
-  .add-row {
-    display: flex;
-    margin-top: 10px;
-  }
-  .add-row input {
-    flex: 1;
-    padding: 8px;
-    background: #111;
-    color: #0ff;
-    border: 1px solid #0ff;
-    border-radius: 4px 0 0 4px;
-  }
-  .add-row button {
-    padding: 8px 12px;
-    background: var(--btn-grad);
-    color: #000;
-    font-weight: bold;
-    border: none;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-    box-shadow: 0 0 6px rgba(0,255,255,0.4);
-    transition: filter 0.3s;
-  }
-  .add-row button:hover {
-    filter: brightness(1.2);
-  }
-  .item-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 160px;
-    overflow-y: auto;
-  }
-  .item-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #111;
-    padding: 6px 10px;
-    margin: 4px 0;
-    border-radius: 4px;
-    border: 1px solid #0ff;
-  }
-  .item-list li span {
-    color: #0ff;
-    text-shadow: var(--text-glow);
-  }
-  .item-list li button {
-    background: #f55;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 2px 6px;
-    cursor: pointer;
-  }
-  .item-list li button:hover {
-    background: #d33;
-  }
-  #result-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(0,0,0,0.7);
-    border: 1px solid #0ff;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0,255,255,0.3);
-  }
-  #result-box p {
-    margin: 8px 0;
-    font-size: 1.1em;
-  }
-  #totals {
-    color: #0ff;
-    text-shadow: var(--text-glow);
-  }
-  #verdict.win { color: #0f0; text-shadow: 0 0 6px #0f0; }
-  #verdict.fair { color: #ff0; text-shadow: 0 0 6px #ff0; }
-  #verdict.lose { color: #f00; text-shadow: 0 0 6px #f00; }
+        async function fetchValueListData() {
+            try {
+                const response = await fetch('index.html');
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const categoryDivs = doc.querySelectorAll('.category');
 
-  @media (max-width: 600px) {
-    .calc-wrap { flex-direction: column; }
-  }
-</style>
+                categoryDivs.forEach(categoryDiv => {
+                    const categoryName = categoryDiv.id;
+                    const table = categoryDiv.querySelector('table');
+                    if (table) {
+                        const rows = table.querySelectorAll('tbody tr');
+                        rows.forEach(row => {
+                            const itemName = row.cells[0].textContent.trim();
+                            let ogValue = row.cells[1].textContent.trim();
+                            let tagValue = row.cells[2].textContent.trim();
 
-<script>
-document.addEventListener('DOMContentLoaded', ()=> {
-  // 1. Extract all your items from existing .category tables
-  const items = [];
-  document.querySelectorAll('.category table tbody').forEach(tbody => {
-    tbody.querySelectorAll('tr').forEach(row => {
-      const cells = row.children;
-      const name = cells[0]?.textContent.trim();
-      const val  = parseFloat(cells[1]?.textContent) || 0;
-      const demMatch = (cells[3]?.textContent||'').match(/(\d+)(?=\/10)/);
-      const demand = demMatch ? parseInt(demMatch[1]) : 0;
-      if(name) items.push({ name, value: val, demand });
-    });
-  });
+                            ogValue = ogValue === 'N/A' ? null : parseFloat(ogValue);
+                            tagValue = tagValue === 'N/A' ? null : parseFloat(tagValue);
 
-  // 2. Populate the shared datalist for autocomplete
-  const dl = document.getElementById('itemsDatalist');
-  items.forEach(i => {
-    const opt = document.createElement('option');
-    opt.value = i.name;
-    dl.appendChild(opt);
-  });
+                            allItems.push({
+                                name: itemName,
+                                ogValue: ogValue,
+                                tagValue: tagValue,
+                                category: categoryName
+                            });
+                        });
+                    }
+                });
+                displayItems(allItems);
+            } catch (error) {
+                console.error('Error fetching value list data:', error);
+                itemListContainer.innerHTML = '<p style="color: red;">Failed to load item data.</p>';
+            }
+        }
 
-  // 3. Generic adder factory
-  function makeAdder(side) {
-    const listEl = document.getElementById(side+'-list');
-    const input  = document.getElementById(side+'-input');
-    const arr = [];
-    return () => {
-      const nm = input.value.trim();
-      input.value = '';
-      const item = items.find(x => x.name.toLowerCase() === nm.toLowerCase());
-      if(!item) return alert(`❌ Not found: ${nm}`);
-      if(arr.some(x => x.name === item.name)) return alert(`⚠️ Already added: ${item.name}`);
-      arr.push(item);
-      // render
-      const li = document.createElement('li');
-      const span = document.createElement('span');
-      span.textContent = `${item.name} (V:${item.value}, D:${item.demand})`;
-      const btn = document.createElement('button');
-      btn.textContent = '✖';
-      btn.onclick = () => {
-        listEl.removeChild(li);
-        arr.splice(arr.indexOf(item),1);
-        compute();
-      };
-      li.append(span, btn);
-      listEl.appendChild(li);
-      compute();
-    };
-  }
+        function displayItems(items) {
+            itemListContainer.innerHTML = '';
+            items.forEach(item => {
+                const itemRow = document.createElement('div');
+                itemRow.classList.add('item-row');
 
-  const addYour = makeAdder('your');
-  const addTheir= makeAdder('their');
-  document.getElementById('add-your').onclick  = addYour;
-  document.getElementById('add-their').onclick = addTheir;
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.classList.add('item-checkbox');
+                checkbox.value = item.name;
+                itemRow.appendChild(checkbox);
 
-  // 4. Compute & display scores
-  function compute() {
-    const yourArr  = Array.from(document.querySelectorAll('#your-list span'))
-                         .map(el=> items.find(i=> el.textContent.startsWith(i.name)));
-    const theirArr = Array.from(document.querySelectorAll('#their-list span'))
-                         .map(el=> items.find(i=> el.name && el.name=== el.textContent.split(' (')[0]));
+                const itemNameSpan = document.createElement('span');
+                itemNameSpan.classList.add('item-name');
+                itemNameSpan.textContent = item.name;
+                itemRow.appendChild(itemNameSpan);
 
-    const sum = a => a.reduce((o,i)=>({ value:o.value+i.value, demand:o.demand+i.demand }), {value:0,demand:0});
-    const Y = sum(yourArr), T = sum(theirArr);
-    const sY = 0.7*Y.value + 0.3*Y.demand;
-    const sT = 0.7*T.value + 0.3*T.demand;
+                itemListContainer.appendChild(itemRow);
+            });
+        }
 
-    document.getElementById('totals').textContent =
-      `You → V:${Y.value}, D:${Y.demand}, S:${sY.toFixed(1)}  |  `+
-      `Them → V:${T.value}, D:${T.demand}, S:${sT.toFixed(1)}`;
+        searchInput.addEventListener('input', function() {
+            const filter = this.value.toLowerCase();
+            const filteredItems = allItems.filter(item => item.name.toLowerCase().startsWith(filter));
+            displayItems(filteredItems);
+        });
 
-    // ±5% tolerance = FAIR
-    const diff = sY - sT;
-    const pct  = Math.abs(diff) / (Math.max(sY,sT,1));
-    let cls='fair', txt='FAIR';
-    if(pct < 0.05) { /* FAIR */ }
-    else if(diff > 0) { cls='win'; txt='WIN'; }
-    else             { cls='lose';txt='LOSE'; }
+        function calculateTrade() {
+            let offeredValue = 0;
+            let receivedValue = 0;
+            const offeredItems = {};
+            const receivedItems = {};
 
-    const vEl = document.getElementById('verdict');
-    vEl.className = cls;
-    vEl.textContent = `Result: ${txt}`;
-  }
-});
-</script>
-<!-- ===== TRADE CALCULATOR END ===== -->
+            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+
+            checkboxes.forEach(checkbox => {
+                const itemName = checkbox.value;
+                const itemData = allItems.find(item => item.name === itemName);
+
+                if (itemData) {
+                    const isOffering = confirm(`Are you offering "${itemName}"? (OK for Yes, Cancel for Receiving)`);
+                    const quantity = parseInt(prompt(`Enter the quantity of "${itemName}":`, '1')) || 1;
+                    const isOG = itemData.ogValue !== null ? confirm(`Is your "${itemName}" the Original (OG) version? (OK for Yes, Cancel for Tag/Serial)`) : false;
+                    const valueToUse = isOG && itemData.ogValue !== null ? itemData.ogValue : (itemData.tagValue !== null ? itemData.tagValue : itemData.ogValue);
+
+                    if (valueToUse !== null && !isNaN(valueToUse)) {
+                        if (isOffering) {
+                            offeredValue += valueToUse * quantity;
+                            offeredItems[itemName] = { quantity: quantity, value: valueToUse, type: isOG ? 'OG' : 'Tag/Serial' };
+                        } else {
+                            receivedValue += valueToUse * quantity;
+                            receivedItems[itemName] = { quantity: quantity, value: valueToUse, type: isOG ? 'OG' : 'Tag/Serial' };
+                        }
+                    } else {
+                        alert(`Value not available for "${itemName}".`);
+                        return;
+                    }
+                }
+            });
+
+            displayTradeResult(offeredValue, receivedValue, offeredItems, receivedItems);
+        }
+
+        function displayTradeResult(offered, received, offeredItems, receivedItems) {
+            tradeResultContainer.style.display = 'block';
+            const tolerance = 0.05; // 5% tolerance for "Fair"
+
+            if (received > offered * (1 + tolerance)) {
+                tradeEvaluationDisplay.textContent = 'Lose';
+                tradeEvaluationDisplay.className = 'lose';
+                evaluationReasonDisplay.textContent = `You are receiving less value (${received.toFixed(1)}) than you are offering (${offered.toFixed(1)}).`;
+            } else if (offered > received * (1 + tolerance)) {
+                tradeEvaluationDisplay.textContent = 'Win';
+                tradeEvaluationDisplay.className = 'win';
+                evaluationReasonDisplay.textContent = `You are receiving more value (${received.toFixed(1)}) than you are offering (${offered.toFixed(1)}).`;
+            } else {
+                tradeEvaluationDisplay.textContent = 'Fair';
+                tradeEvaluationDisplay.className = 'fair';
+                evaluationReasonDisplay.textContent = `The trade is within a reasonable value range (Offered: ${offered.toFixed(1)}, Received: ${received.toFixed(1)}).`;
+            }
+
+            const balance = received - offered;
+            tradeBalanceDisplay.textContent = balance.toFixed(1);
+        }
+
+        // Load the item data when the calculator page loads
+        fetchValueListData();
+    </script>
+</body>
+</html>
