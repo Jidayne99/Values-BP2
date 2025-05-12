@@ -161,16 +161,16 @@
             text-shadow: 0 0 20px white; /* More intense shadow */
         }
         .win-animation {
-            background: linear-gradient(to right, transparent, lime, lime, transparent); /* Brighter lime */
-            color: lime; /* Brighter lime */
+            background-color: rgba(0, 255, 0, 0.15); /* Light green background */
+            color: lime;
         }
         .fair-animation {
-            background: linear-gradient(to right, transparent, yellow, yellow, transparent); /* Brighter yellow */
-            color: yellow; /* Brighter yellow */
+            background-color: rgba(255, 255, 0, 0.15); /* Light yellow background */
+            color: yellow;
         }
         .lose-animation {
-            background: linear-gradient(to right, transparent, #ff4d4d, #ff4d4d, transparent); /* Brighter red */
-            color: #ff4d4d; /* Brighter red */
+            background-color: rgba(255, 0, 0, 0.15); /* Light red background */
+            color: #ff4d4d;
         }
         .reason-balance-container {
             margin-top: 15px;
@@ -335,23 +335,21 @@
             margin-bottom: 5px;
         }
 
-        .trade-evaluation-bold {
+        .evaluation-highlight {
             font-weight: bold;
-            font-size: 1.2em; /* Slightly larger than regular text */
-            display: inline-block; /* Allows for background styling to fit text */
-            padding: 2px 5px; /* Add some padding around the text */
-            border-radius: 5px; /* Optional: round the corners */
+            padding: 2px 5px;
+            border-radius: 5px;
         }
-        .win-evaluation {
-            background-color: rgba(0, 255, 0, 0.15); /* Light green background */
+        .win-highlight {
+            background-color: rgba(0, 255, 0, 0.15);
             color: lime;
         }
-        .fair-evaluation {
-            background-color: rgba(255, 255, 0, 0.15); /* Light yellow background */
+        .fair-highlight {
+            background-color: rgba(255, 255, 0, 0.15);
             color: yellow;
         }
-        .lose-evaluation {
-            background-color: rgba(255, 0, 0, 0.15); /* Light red background */
+        .lose-highlight {
+            background-color: rgba(255, 0, 0, 0.15);
             color: #ff4d4d;
         }
     </style>
@@ -383,6 +381,8 @@
         <div id="tradeResultContainer" style="display: none;">
             <div id="tradeResultAnimation" class="result-animation">
                 <p id="tradeEvaluation" class="evaluation-text"></p>
+                <p id="offeredValueDisplay" class="balance-text"></p>
+                <p id="receivedValueDisplay" class="balance-text"></p>
             </div>
             <div class="reason-balance-container">
                 <p id="evaluationReason" class="reason-text"></p>
@@ -398,8 +398,6 @@
                     <h4 style="color: #ff69b4;">Received Items:</h4>
                     <ul id="receivedItemsList"></ul>
                 </div>
-                <div id="offeredTotalValue" class="balance-text" style="margin-top: 10px;"></div>
-                <div id="receivedTotalValue" class="balance-text"></div>
             </div>
         </div>
 
@@ -426,11 +424,11 @@
     <script>
         let allItems = [];
         const offeredSearchInput = document.getElementById('offeredSearch');
-        const receivedSearchInput = document.getElementById
-        ('receivedSearch');
+        const receivedSearchInput = document.getElementById('receivedSearch');
         const offeredItemListContainer = document.getElementById('offeredItemList');
         const receivedItemListContainer = document.getElementById('receivedItemList');
-        const selectedOfferedItemsContainer = document.getElementById('selectedOfferedItems');
+        const selectedOfferedItemsContainer = document.getElementById('selectedOffered
+        Items');
         const selectedReceivedItemsContainer = document.getElementById('selectedReceivedItems');
         const tradeResultAnimation = document.getElementById('tradeResultAnimation');
         const tradeEvaluationDisplay = document.getElementById('tradeEvaluation');
@@ -441,8 +439,8 @@
         const receivedDetailsContainer = document.getElementById('receivedDetails');
         const offeredItemsList = document.getElementById('offeredItemsList');
         const receivedItemsList = document.getElementById('receivedItemsList');
-        const offeredTotalValueDisplay = document.getElementById('offeredTotalValue');
-        const receivedTotalValueDisplay = document.getElementById('receivedTotalValue');
+        const offeredValueDisplay = document.getElementById('offeredValueDisplay');
+        const receivedValueDisplay = document.getElementById('receivedValueDisplay');
 
         const itemModal = document.getElementById('itemModal');
         const modalItemName = document.getElementById('modalItemName');
@@ -655,22 +653,24 @@
             let receivedDemandScore = calculateDemandScore(receivedSelection);
 
             if (receivedValue > offeredValue * (1 + tolerance) || (receivedValue >= offeredValue * (1 - tolerance) && receivedDemandScore > offeredDemandScore + 1)) {
-                evaluationText = '<span class="trade-evaluation-bold win-evaluation">WIN</span>';
+                evaluationText = `<span class="evaluation-highlight win-highlight">WIN</span>`;
                 evaluationClass = 'win-animation';
-                reasonText = `You are receiving more value or have a significant demand advantage. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
+                reasonText = `You are receiving more value or have a significant demand advantage.`;
             } else if (offeredValue > receivedValue * (1 + tolerance) || (offeredValue >= receivedValue * (1 - tolerance) && offeredDemandScore > receivedDemandScore + 1)) {
-                evaluationText = '<span class="trade-evaluation-bold lose-evaluation">LOSE</span>';
+                evaluationText = `<span class="evaluation-highlight lose-highlight">LOSE</span>`;
                 evaluationClass = 'lose-animation';
-                reasonText = `You are receiving less value or have a significant demand disadvantage. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
+                reasonText = `You are receiving less value or have a significant demand disadvantage.`;
             } else {
-                evaluationText = '<span class="trade-evaluation-bold fair-evaluation">FAIR</span>';
+                evaluationText = `<span class="evaluation-highlight fair-highlight">FAIR</span>`;
                 evaluationClass = 'fair-animation';
-                reasonText = `The base value is within a reasonable range, and demand is relatively balanced. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
+                reasonText = `The base value is within a reasonable range, and demand is relatively balanced.`;
             }
 
             tradeEvaluationDisplay.innerHTML = evaluationText;
             tradeResultAnimation.className = 'result-animation ' + evaluationClass;
             evaluationReasonDisplay.textContent = reasonText;
+            offeredValueDisplay.textContent = `Total Offered: ${offeredValue.toFixed(1)}`;
+            receivedValueDisplay.textContent = `Total Receiving: ${receivedValue.toFixed(1)}`;
 
             const balance = receivedValue - offeredValue;
             const balanceText = balance >= 0 ? `Balance: +${balance.toFixed(1)}` : `Balance: ${balance.toFixed(1)}`;
@@ -678,38 +678,30 @@
 
             // Display trade details with stats
             offeredItemsList.innerHTML = '';
-            let offeredTotal = 0;
             for (const key in offeredSelection) {
                 const item = offeredSelection[key];
                 const originalItemData = allItems.find(i => i.name === item.name);
                 const demandText = originalItemData && originalItemData.demand ? `(Demand: ${originalItemData.demand})` : '(Demand: N/A)';
                 const valueText = item.type === 'OG' ? `Value: ${originalItemData.ogValue !== null ? originalItemData.ogValue.toFixed(1) : 'N/A'}` : `Value: ${originalItemData.tagValue !== null ? originalItemData.tagValue.toFixed(1) : 'N/A'}`;
-                const totalItemValue = item.value * item.quantity;
-                offeredTotal += totalItemValue;
 
                 const listItem = document.createElement('li');
                 listItem.classList.add('trade-item');
-                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText} - Total: ${totalItemValue.toFixed(1)}`;
+                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText}`;
                 offeredItemsList.appendChild(listItem);
             }
-            offeredTotalValueDisplay.textContent = `Total Offered Value: ${offeredTotal.toFixed(1)}`;
 
             receivedItemsList.innerHTML = '';
-            let receivedTotal = 0;
             for (const key in receivedSelection) {
                 const item = receivedSelection[key];
                 const originalItemData = allItems.find(i => i.name === item.name);
                 const demandText = originalItemData && originalItemData.demand ? `(Demand: ${originalItemData.demand})` : '(Demand: N/A)';
                 const valueText = item.type === 'OG' ? `Value: ${originalItemData.ogValue !== null ? originalItemData.ogValue.toFixed(1) : 'N/A'}` : `Value: ${originalItemData.tagValue !== null ? originalItemData.tagValue.toFixed(1) : 'N/A'}`;
-                const totalItemValue = item.value * item.quantity;
-                receivedTotal += totalItemValue;
 
                 const listItem = document.createElement('li');
                 listItem.classList.add('trade-item');
-                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText} - Total: ${totalItemValue.toFixed(1)}`;
+                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText}`;
                 receivedItemsList.appendChild(listItem);
             }
-            receivedTotalValueDisplay.textContent = `Total Received Value: ${receivedTotal.toFixed(1)}`;
         }
 
         function calculateDemandScore(selection) {
