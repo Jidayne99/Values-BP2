@@ -1,313 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Trade Calculator</title>
-    <!-- Google Font for neon theme -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* General styling */
-        body {
-            background: #0d1117;
-            color: #fff;
-            font-family: 'Orbitron', sans-serif;
-            margin: 20px;
-        }
-        /* Trade container layout */
-        #trade-calculator {
-            background: linear-gradient(135deg, #001, #111);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,255,255,0.3);
-        }
-        .trade-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .trade-side {
-            flex: 1;
-            min-width: 280px;
-            background: #111;
-            padding: 15px;
-            border: 1px solid #0ff;
-            border-radius: 8px;
-            box-shadow: 0 0 8px rgba(0,255,255,0.2);
-        }
-        .trade-side h2 {
-            margin-top: 0;
-            font-size: 1.2em;
-            color: #0ff;
-            text-shadow: 0 0 5px #0ff;
-        }
-        /* Item list styling */
-        .item-list {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        .item-list li {
-            background: #222;
-            margin: 5px 0;
-            padding: 5px 10px;
-            border: 1px solid #0ff;
-            border-radius: 4px;
-            position: relative;
-        }
-        .item-list li span {
-            font-size: 0.9em;
-        }
-        .remove-btn {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #f55;
-            font-size: 1em;
-            cursor: pointer;
-            text-shadow: 0 0 3px #f55;
-        }
-        .remove-btn:hover {
-            color: #fff;
-        }
-        /* Input and button styling */
-        .add-item {
-            display: flex;
-            margin-top: 10px;
-        }
-        .add-item input[type="text"] {
-            flex: 1;
-            padding: 5px;
-            border: 1px solid #0ff;
-            border-radius: 4px 0 0 4px;
-            background: #222;
-            color: #fff;
-        }
-        .add-item input[list] {
-            background: #222;
-            color: #fff;
-        }
-        .add-item button {
-            padding: 5px 10px;
-            border: 1px solid #0ff;
-            border-left: none;
-            border-radius: 0 4px 4px 0;
-            background: #0a0a0a;
-            color: #0ff;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .add-item button:hover {
-            background: #0ff;
-            color: #000;
-        }
-        /* Compare button styling */
-        #compare-btn {
-            margin-top: 20px;
-            padding: 8px 15px;
-            border: 2px solid #0ff;
-            border-radius: 5px;
-            background: #0a0a0a;
-            color: #0ff;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 0 8px rgba(0,255,255,0.4);
-            transition: background 0.3s, box-shadow 0.3s;
-        }
-        #compare-btn:hover {
-            background: #0ff;
-            color: #000;
-            box-shadow: 0 0 12px rgba(0,255,255,0.6);
-        }
-        /* Result box styling */
-        #result {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #0ff;
-            border-radius: 6px;
-            background: #121212;
-            box-shadow: 0 0 10px rgba(0,255,255,0.2);
-            color: #0ff;
-            text-shadow: 0 0 5px #0ff;
-            white-space: pre-line;
-        }
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .trade-container {
-                flex-direction: column;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Trade Calculator</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+body {
+    background-color: #050505;
+    color: #eee;
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+.trade-calculator {
+    max-width: 800px;
+    margin: 0 auto;
+}
+h1 {
+    text-align: center;
+    font-size: 2em;
+    color: #0ff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
+.side-title {
+    margin-bottom: 10px;
+    color: #ff8c00;
+    font-size: 1.5em;
+    text-shadow: 0 0 4px #ff8c00;
+}
+.calc-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+.side {
+    flex: 1;
+    min-width: 260px;
+    margin: 10px;
+    background-color: #111;
+    padding: 10px;
+    border-radius: 8px;
+}
+.input-group {
+    margin-bottom: 10px;
+}
+.input-group input {
+    width: calc(100% - 80px);
+    padding: 8px;
+    font-size: 1em;
+    color: #0ff;
+    background-color: #222;
+    border: 1px solid #0ff;
+    border-radius: 4px;
+}
+.input-group button {
+    width: 70px;
+    margin-left: 5px;
+    padding: 8px;
+    background: linear-gradient(45deg, #00ffff, #ff8c00);
+    color: #111;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 5px #00ffff, 0 0 10px #ff8c00;
+}
+.input-group button:hover {
+    opacity: 0.8;
+}
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.item-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #222;
+    margin: 5px 0;
+    padding: 5px 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+}
+.item-list li span {
+    flex: 1;
+    color: #0ff;
+}
+.item-list li button.remove-btn {
+    background: #a00;
+    color: #fff;
+    border: none;
+    padding: 3px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.item-list li button.remove-btn:hover {
+    background: #d00;
+}
+.results {
+    margin-top: 20px;
+    text-align: center;
+}
+.results div {
+    margin: 5px 0;
+}
+.score-win { color: #0f0; }
+.score-fair { color: #ff0; }
+.score-lose { color: #f00; }
+
+@media (max-width: 600px) {
+    .calc-section { flex-direction: column; }
+}
+</style>
 </head>
 <body>
-    <section id="trade-calculator">
-        <h1 style="text-align: center; color: #0ff; text-shadow: 0 0 5px #0ff;">Trade Calculator</h1>
-        <p>Note: Items valued below 50 are excluded from analysis.</p>
-        <div class="trade-container">
-            <div class="trade-side" id="your-offer">
-                <h2>Your Offer</h2>
-                <ul class="item-list" id="your-items-list"></ul>
-                <div class="add-item">
-                    <input type="text" id="your-item-input" list="itemList" placeholder="Item name...">
-                    <button id="add-your-btn">Add Item</button>
-                </div>
-            </div>
-            <div class="trade-side" id="their-offer">
-                <h2>Their Offer</h2>
-                <ul class="item-list" id="their-items-list"></ul>
-                <div class="add-item">
-                    <input type="text" id="their-item-input" list="itemList" placeholder="Item name...">
-                    <button id="add-their-btn">Add Item</button>
-                </div>
-            </div>
-        </div>
-        <button id="compare-btn">Analyze Trade</button>
-        <div id="result"></div>
-        <!-- Searchable items list -->
-        <datalist id="itemList"></datalist>
-    </section>
+<div class="trade-calculator">
+  <h1>Trade Calculator</h1>
+  <div class="calc-section">
+    <div class="side">
+      <div class="side-title">Your Offer</div>
+      <div class="input-group">
+        <input type="text" id="your-input" list="itemsList" placeholder="Type item name">
+        <button id="add-your">Add</button>
+      </div>
+      <datalist id="itemsList">
+        <!-- Options populated via script -->
+      </datalist>
+      <ul id="your-list" class="item-list"></ul>
+    </div>
+    <div class="side">
+      <div class="side-title">Their Offer</div>
+      <div class="input-group">
+        <input type="text" id="their-input" list="itemsList" placeholder="Type item name">
+        <button id="add-their">Add</button>
+      </div>
+      <ul id="their-list" class="item-list"></ul>
+    </div>
+  </div>
+  <div class="results">
+    <div id="your-total">Your Total Value: 0, Demand: 0, Score: 0</div>
+    <div id="their-total">Their Total Value: 0, Demand: 0, Score: 0</div>
+    <div id="result" class="score-fair">Result: FAIR</div>
+  </div>
+</div>
 
-    <!-- Example: The table with item values and demand (replace or use your own) -->
-    <table id="valueTable" style="display:none;">
-        <tr><th>Name</th><th>Value</th><th>Demand</th></tr>
-        <tr><td>OG Mellow</td><td>120</td><td>50</td></tr>
-        <tr><td>Cyclone</td><td>100</td><td>70</td></tr>
-        <tr><td>Knife</td><td>40</td><td>30</td></tr>
-        <!-- ... -->
-    </table>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Item data: name, value, demand
+    const items = [
+        { name: 'Iron Sword', value: 10, demand: 50 },
+        { name: 'Steel Shield', value: 20, demand: 30 },
+        { name: 'Magic Potion', value: 5, demand: 80 },
+        { name: 'Dragon Armor', value: 50, demand: 10 },
+        { name: 'Healing Herb', value: 2, demand: 70 },
+        { name: 'Mystic Wand', value: 40, demand: 20 },
+        { name: 'Cursed Dagger', value: 15, demand: 40 },
+        { name: 'Golden Crown', value: 100, demand: 5 },
+        { name: 'Silver Ring', value: 8, demand: 60 },
+        { name: 'Legendary Bow', value: 45, demand: 25 }
+        // ... add all items from your value list here ...
+    ];
 
-    <script>
-        // Gather item data from existing value list table
-        let items = [];
-        const table = document.getElementById('valueTable');
-        if (table) {
-            const rows = table.getElementsByTagName('tr');
-            // Assume first row is header
-            for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                if (cells.length >= 3) {
-                    const name = cells[0].textContent.trim();
-                    const value = parseFloat(cells[1].textContent.trim());
-                    const demand = parseFloat(cells[2].textContent.trim());
-                    if (name && !isNaN(value) && !isNaN(demand)) {
-                        items.push({ name, value, demand });
-                    }
-                }
-            }
+    // Populate datalist with item names
+    const dataList = document.getElementById('itemsList');
+    items.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.name;
+        dataList.appendChild(option);
+    });
+
+    const yourInput = document.getElementById('your-input');
+    const theirInput = document.getElementById('their-input');
+    const addYourBtn = document.getElementById('add-your');
+    const addTheirBtn = document.getElementById('add-their');
+    const yourListEl = document.getElementById('your-list');
+    const theirListEl = document.getElementById('their-list');
+    const yourTotalEl = document.getElementById('your-total');
+    const theirTotalEl = document.getElementById('their-total');
+    const resultEl = document.getElementById('result');
+
+    let yourItems = [];
+    let theirItems = [];
+
+    function addItem(itemName, side) {
+        const list = side === 'your' ? yourItems : theirItems;
+        const listEl = side === 'your' ? yourListEl : theirListEl;
+        const input = side === 'your' ? yourInput : theirInput;
+
+        // Find item object by name (case-insensitive)
+        const item = items.find(i => i.name.toLowerCase() === itemName.toLowerCase());
+        if (!item) {
+            alert('Item not found: ' + itemName);
+            return;
+        }
+        // Prevent duplicate
+        if (list.some(i => i.name === item.name)) {
+            alert('Item already added: ' + item.name);
+            return;
+        }
+        list.push(item);
+        // Create list element
+        const li = document.createElement('li');
+        const span = document.createElement('span');
+        span.textContent = item.name;
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'x';
+        removeBtn.className = 'remove-btn';
+        removeBtn.addEventListener('click', () => {
+            listEl.removeChild(li);
+            // Remove from array and recalc
+            const idx = list.findIndex(i => i.name === item.name);
+            if (idx > -1) list.splice(idx, 1);
+            calculate();
+        });
+        li.appendChild(span);
+        li.appendChild(removeBtn);
+        listEl.appendChild(li);
+        input.value = '';
+        calculate();
+    }
+
+    addYourBtn.addEventListener('click', () => {
+        const name = yourInput.value.trim();
+        if (name) addItem(name, 'your');
+    });
+    addTheirBtn.addEventListener('click', () => {
+        const name = theirInput.value.trim();
+        if (name) addItem(name, 'their');
+    });
+
+    function calculate() {
+        const sumValueYour = yourItems.reduce((sum, i) => sum + i.value, 0);
+        const sumDemandYour = yourItems.reduce((sum, i) => sum + i.demand, 0);
+        const sumValueTheir = theirItems.reduce((sum, i) => sum + i.value, 0);
+        const sumDemandTheir = theirItems.reduce((sum, i) => sum + i.demand, 0);
+
+        const scoreYour = 0.7 * sumValueYour + 0.3 * sumDemandYour;
+        const scoreTheir = 0.7 * sumValueTheir + 0.3 * sumDemandTheir;
+
+        yourTotalEl.textContent = `Your Total Value: ${sumValueYour}, Demand: ${sumDemandYour}, Score: ${scoreYour.toFixed(1)}`;
+        theirTotalEl.textContent = `Their Total Value: ${sumValueTheir}, Demand: ${sumDemandTheir}, Score: ${scoreTheir.toFixed(1)}`;
+
+        // Determine WIN/FAIR/LOSE (±5% threshold for fair trade)
+        const diff = scoreYour - scoreTheir;
+        const percentDiff = Math.abs(diff) / (Math.max(scoreYour, scoreTheir) || 1);
+        if (Math.abs(diff) < 1e-6 || percentDiff < 0.05) {
+            resultEl.textContent = 'Result: FAIR';
+            resultEl.className = 'score-fair';
+        } else if (diff > 0) {
+            resultEl.textContent = 'Result: WIN';
+            resultEl.className = 'score-win';
         } else {
-            console.error('Value table not found. Please ensure a table with id="valueTable" exists.');
+            resultEl.textContent = 'Result: LOSE';
+            resultEl.className = 'score-lose';
         }
-
-        // Populate datalist options
-        const dataList = document.getElementById('itemList');
-        items.forEach(item => {
-            const option = document.createElement('option');
-            option.value = item.name;
-            dataList.appendChild(option);
-        });
-
-        // Selected items arrays
-        let yourItems = [];
-        let theirItems = [];
-
-        // Add item to a side
-        function addItem(side) {
-            const input = document.getElementById(side + '-item-input');
-            const list = document.getElementById(side + '-items-list');
-            const name = input.value.trim();
-            // Clear input
-            input.value = '';
-            // Find item in list
-            const item = items.find(it => it.name === name);
-            if (!item) {
-                alert("Item not found in value list.");
-                return;
-            }
-            if (item.value < 50) {
-                alert(`"${item.name}" has value below 50 and will be ignored in calculation.`);
-                return;
-            }
-            // Determine target array
-            let targetArray = (side === 'your') ? yourItems : theirItems;
-            // Check duplicate
-            if (targetArray.some(it => it.name === name)) {
-                alert("Item already added.");
-                return;
-            }
-            // Add to array
-            targetArray.push(item);
-            // Create list element
-            const li = document.createElement('li');
-            const span = document.createElement('span');
-            span.textContent = `${item.name} (Val: ${item.value}, Dem: ${item.demand})`;
-            const btn = document.createElement('button');
-            btn.textContent = '✖';
-            btn.className = 'remove-btn';
-            btn.onclick = function() {
-                // Remove from array and UI
-                const idx = targetArray.findIndex(it => it.name === item.name);
-                if (idx > -1) targetArray.splice(idx, 1);
-                list.removeChild(li);
-            };
-            li.appendChild(span);
-            li.appendChild(btn);
-            list.appendChild(li);
-        }
-
-        document.getElementById('add-your-btn').addEventListener('click', function() {
-            addItem('your');
-        });
-        document.getElementById('add-their-btn').addEventListener('click', function() {
-            addItem('their');
-        });
-
-        // Compare trade
-        document.getElementById('compare-btn').addEventListener('click', function() {
-            const resultDiv = document.getElementById('result');
-            // Clear previous result
-            resultDiv.textContent = '';
-            if (yourItems.length === 0 || theirItems.length === 0) {
-                resultDiv.textContent = "Add at least one item on each side to compare.";
-                return;
-            }
-            // Compute totals
-            const yourTotalValue = yourItems.reduce((sum, it) => sum + it.value, 0);
-            const yourTotalDemand = yourItems.reduce((sum, it) => sum + it.demand, 0);
-            const theirTotalValue = theirItems.reduce((sum, it) => sum + it.value, 0);
-            const theirTotalDemand = theirItems.reduce((sum, it) => sum + it.demand, 0);
-            // Weighted scores
-            const yourScore = 0.7 * yourTotalValue + 0.3 * yourTotalDemand;
-            const theirScore = 0.7 * theirTotalValue + 0.3 * theirTotalDemand;
-            // Determine partial results
-            let resultText = "";
-            if (yourTotalDemand > theirTotalDemand) {
-                resultText += "WIN in demand, ";
-            } else if (yourTotalDemand < theirTotalDemand) {
-                resultText += "LOSE in demand, ";
-            } else {
-                resultText += "TIE in demand, ";
-            }
-            if (yourTotalValue > theirTotalValue) {
-                resultText += "WIN in value";
-            } else if (yourTotalValue < theirTotalValue) {
-                resultText += "LOSE in value";
-            } else {
-                resultText += "TIE in value";
-            }
-            // Final result
-            let finalResult = (yourScore > theirScore) ? "WIN" : (yourScore < theirScore) ? "LOSE" : "TIE";
-            // Compose final line with item names
-            const yourNames = yourItems.map(it => it.name).join(" + ");
-            const theirNames = theirItems.map(it => it.name).join(" + ");
-            const finalLine = `Final Result: ${yourNames} for ${theirNames} is ${finalResult}`;
-            // Display result
-            resultDiv.textContent = "Partial: " + resultText + "\n" + finalLine;
-        });
-    </script>
+    }
+});
+</script>
 </body>
 </html>
