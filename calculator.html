@@ -146,31 +146,35 @@
             transform: scale(1.05);
             box-shadow: 0 0 20px white;
         }
-        .result-animation {
+        .result-container {
             margin-top: 30px;
             padding: 20px;
             border: 2px solid cyan;
             border-radius: 10px;
             text-align: center;
-            position: relative; /* For absolute positioning of text */
-            overflow: hidden; /* Clip the animation */
         }
         .evaluation-text {
             font-size: 2.5em; /* Slightly larger */
             font-weight: bold;
             text-shadow: 0 0 20px white; /* More intense shadow */
+            margin-bottom: 10px;
         }
-        .win-animation {
-            background-color: rgba(0, 255, 0, 0.15); /* Light green background */
-            color: lime;
+        .win-evaluation {
+            background: linear-gradient(to right, transparent, lime, lime, transparent); /* Brighter lime */
+            color: lime; /* Brighter lime */
         }
-        .fair-animation {
-            background-color: rgba(255, 255, 0, 0.15); /* Light yellow background */
-            color: yellow;
+        .fair-evaluation {
+            background: linear-gradient(to right, transparent, yellow, yellow, transparent); /* Brighter yellow */
+            color: yellow; /* Brighter yellow */
         }
-        .lose-animation {
-            background-color: rgba(255, 0, 0, 0.15); /* Light red background */
-            color: #ff4d4d;
+        .lose-evaluation {
+            background: linear-gradient(to right, transparent, #ff4d4d, #ff4d4d, transparent); /* Brighter red */
+            color: #ff4d4d; /* Brighter red */
+        }
+        .value-offered-received {
+            font-size: 1.2em;
+            color: #eee;
+            margin-bottom: 8px;
         }
         .reason-balance-container {
             margin-top: 15px;
@@ -335,21 +339,23 @@
             margin-bottom: 5px;
         }
 
-        .evaluation-highlight {
+        .trade-evaluation-bold {
             font-weight: bold;
-            padding: 2px 5px;
-            border-radius: 5px;
+            font-size: 1.2em; /* Slightly larger than regular text */
+            display: inline-block; /* Allows for background styling to fit text */
+            padding: 2px 5px; /* Add some padding around the text */
+            border-radius: 5px; /* Optional: round the corners */
         }
-        .win-highlight {
-            background-color: rgba(0, 255, 0, 0.15);
+        .win-evaluation {
+            background-color: rgba(0, 255, 0, 0.15); /* Light green background */
             color: lime;
         }
-        .fair-highlight {
-            background-color: rgba(255, 255, 0, 0.15);
+        .fair-evaluation {
+            background-color: rgba(255, 255, 0, 0.15); /* Light yellow background */
             color: yellow;
         }
-        .lose-highlight {
-            background-color: rgba(255, 0, 0, 0.15);
+        .lose-evaluation {
+            background-color: rgba(255, 0, 0, 0.15); /* Light red background */
             color: #ff4d4d;
         }
     </style>
@@ -379,10 +385,10 @@
         <button class="calculate-button" onclick="calculateTrade()">Evaluate Trade</button>
 
         <div id="tradeResultContainer" style="display: none;">
-            <div id="tradeResultAnimation" class="result-animation">
+            <div class="result-container">
                 <p id="tradeEvaluation" class="evaluation-text"></p>
-                <p id="offeredValueDisplay" class="balance-text"></p>
-                <p id="receivedValueDisplay" class="balance-text"></p>
+                <p id="valueOffered" class="value-offered-received"></p>
+                <p id="valueReceived" class="value-offered-received"></p>
             </div>
             <div class="reason-balance-container">
                 <p id="evaluationReason" class="reason-text"></p>
@@ -425,12 +431,11 @@
         let allItems = [];
         const offeredSearchInput = document.getElementById('offeredSearch');
         const receivedSearchInput = document.getElementById('receivedSearch');
-        const offeredItemListContainer = document.getElementById('offeredItemList');
+      ItemListContainer = document.getElementById('offeredItemList');
         const receivedItemListContainer = document.getElementById('receivedItemList');
-        const selectedOfferedItemsContainer = document.getElementById('selectedOffered
-        Items');
+        const selectedOfferedItemsContainer = document.getElementById('selectedOfferedItems');
         const selectedReceivedItemsContainer = document.getElementById('selectedReceivedItems');
-        const tradeResultAnimation = document.getElementById('tradeResultAnimation');
+        const tradeResultContainer = document.getElementById('tradeResultContainer');
         const tradeEvaluationDisplay = document.getElementById('tradeEvaluation');
         const evaluationReasonDisplay = document.getElementById('evaluationReason');
         const tradeBalanceDisplay = document.getElementById('tradeBalance');
@@ -439,8 +444,8 @@
         const receivedDetailsContainer = document.getElementById('receivedDetails');
         const offeredItemsList = document.getElementById('offeredItemsList');
         const receivedItemsList = document.getElementById('receivedItemsList');
-        const offeredValueDisplay = document.getElementById('offeredValueDisplay');
-        const receivedValueDisplay = document.getElementById('receivedValueDisplay');
+        const valueOfferedDisplay = document.getElementById('valueOffered');
+        const valueReceivedDisplay = document.getElementById('valueReceived');
 
         const itemModal = document.getElementById('itemModal');
         const modalItemName = document.getElementById('modalItemName');
@@ -653,24 +658,23 @@
             let receivedDemandScore = calculateDemandScore(receivedSelection);
 
             if (receivedValue > offeredValue * (1 + tolerance) || (receivedValue >= offeredValue * (1 - tolerance) && receivedDemandScore > offeredDemandScore + 1)) {
-                evaluationText = `<span class="evaluation-highlight win-highlight">WIN</span>`;
-                evaluationClass = 'win-animation';
+                evaluationText = 'WIN';
+                evaluationClass = 'win-evaluation';
                 reasonText = `You are receiving more value or have a significant demand advantage.`;
             } else if (offeredValue > receivedValue * (1 + tolerance) || (offeredValue >= receivedValue * (1 - tolerance) && offeredDemandScore > receivedDemandScore + 1)) {
-                evaluationText = `<span class="evaluation-highlight lose-highlight">LOSE</span>`;
-                evaluationClass = 'lose-animation';
+                evaluationText = 'LOSE';
+                evaluationClass = 'lose-evaluation';
                 reasonText = `You are receiving less value or have a significant demand disadvantage.`;
             } else {
-                evaluationText = `<span class="evaluation-highlight fair-highlight">FAIR</span>`;
-                evaluationClass = 'fair-animation';
+                evaluationText = 'FAIR';
+                evaluationClass = 'fair-evaluation';
                 reasonText = `The base value is within a reasonable range, and demand is relatively balanced.`;
             }
 
-            tradeEvaluationDisplay.innerHTML = evaluationText;
-            tradeResultAnimation.className = 'result-animation ' + evaluationClass;
+            tradeEvaluationDisplay.textContent = `<span class="trade-evaluation-bold ${evaluationClass}">${evaluationText}</span>`;
+            valueOfferedDisplay.textContent = `Offering: ${offeredValue.toFixed(1)}`;
+            valueReceivedDisplay.textContent = `Receiving: ${receivedValue.toFixed(1)}`;
             evaluationReasonDisplay.textContent = reasonText;
-            offeredValueDisplay.textContent = `Total Offered: ${offeredValue.toFixed(1)}`;
-            receivedValueDisplay.textContent = `Total Receiving: ${receivedValue.toFixed(1)}`;
 
             const balance = receivedValue - offeredValue;
             const balanceText = balance >= 0 ? `Balance: +${balance.toFixed(1)}` : `Balance: ${balance.toFixed(1)}`;
