@@ -429,7 +429,7 @@
         const receivedItemListContainer = document.getElementById('receivedItemList');
         const selectedOfferedItemsContainer = document.getElementById('selectedOfferedItems');
         const selectedReceivedItemsContainer = document.getElementById('selectedReceivedItems');
-      const tradeResultAnimation = document.getElementById('tradeResultAnimation');
+        const tradeResultAnimation = document.getElementById('tradeResultAnimation');
         const tradeEvaluationDisplay = document.getElementById('tradeEvaluation');
         const evaluationReasonDisplay = document.getElementById('evaluationReason');
         const tradeBalanceDisplay = document.getElementById('tradeBalance');
@@ -663,7 +663,7 @@
                 reasonText = `The base value is within a reasonable range, and demand is relatively balanced. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
             }
 
-            tradeEvaluationDisplay.textContent = evaluationText;
+            tradeEvaluationDisplay.textContent = `**${evaluationText}**`;
             tradeResultAnimation.className = 'result-animation ' + evaluationClass;
             evaluationReasonDisplay.textContent = reasonText;
             tradeEvaluationDisplay.className = 'evaluation-text trade-evaluation-bold ' + evaluationClass.replace('-animation', '-evaluation');
@@ -673,22 +673,30 @@
             const balanceText = balance >= 0 ? `Balance: +${balance.toFixed(1)}` : `Balance: ${balance.toFixed(1)}`;
             tradeBalanceDisplay.textContent = balanceText;
 
-            // Display trade details
+            // Display trade details with stats
             offeredItemsList.innerHTML = '';
             for (const key in offeredSelection) {
                 const item = offeredSelection[key];
+                const originalItemData = allItems.find(i => i.name === item.name);
+                const demandText = originalItemData && originalItemData.demand ? `(Demand: ${originalItemData.demand})` : '(Demand: N/A)';
+                const valueText = item.type === 'OG' ? `Value: ${originalItemData.ogValue !== null ? originalItemData.ogValue.toFixed(1) : 'N/A'}` : `Value: ${originalItemData.tagValue !== null ? originalItemData.tagValue.toFixed(1) : 'N/A'}`;
+
                 const listItem = document.createElement('li');
                 listItem.classList.add('trade-item');
-                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type})`;
+                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText}`;
                 offeredItemsList.appendChild(listItem);
             }
 
             receivedItemsList.innerHTML = '';
             for (const key in receivedSelection) {
                 const item = receivedSelection[key];
+                const originalItemData = allItems.find(i => i.name === item.name);
+                const demandText = originalItemData && originalItemData.demand ? `(Demand: ${originalItemData.demand})` : '(Demand: N/A)';
+                const valueText = item.type === 'OG' ? `Value: ${originalItemData.ogValue !== null ? originalItemData.ogValue.toFixed(1) : 'N/A'}` : `Value: ${originalItemData.tagValue !== null ? originalItemData.tagValue.toFixed(1) : 'N/A'}`;
+
                 const listItem = document.createElement('li');
                 listItem.classList.add('trade-item');
-                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type})`;
+                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText}`;
                 receivedItemsList.appendChild(listItem);
             }
         }
