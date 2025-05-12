@@ -156,21 +156,21 @@
             overflow: hidden; /* Clip the animation */
         }
         .evaluation-text {
-            font-size: 2em;
+            font-size: 2.5em; /* Slightly larger */
             font-weight: bold;
-            text-shadow: 0 0 15px white;
+            text-shadow: 0 0 20px white; /* More intense shadow */
         }
         .win-animation {
-            background: linear-gradient(to right, transparent, limegreen, limegreen, transparent);
-            color: limegreen;
+            background: linear-gradient(to right, transparent, lime, lime, transparent); /* Brighter lime */
+            color: lime; /* Brighter lime */
         }
         .fair-animation {
-            background: linear-gradient(to right, transparent, gold, gold, transparent);
-            color: gold;
+            background: linear-gradient(to right, transparent, yellow, yellow, transparent); /* Brighter yellow */
+            color: yellow; /* Brighter yellow */
         }
         .lose-animation {
-            background: linear-gradient(to right, transparent, red, red, transparent);
-            color: red;
+            background: linear-gradient(to right, transparent, #ff4d4d, #ff4d4d, transparent); /* Brighter red */
+            color: #ff4d4d; /* Brighter red */
         }
         .reason-balance-container {
             margin-top: 15px;
@@ -212,6 +212,108 @@
             font-size: 0.9em;
             margin-left: 5px;
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #222;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 10px;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 400px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .modal-content h2 {
+            color: cyan;
+            text-shadow: 0 0 8px cyan;
+            margin-bottom: 15px;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .modal-content input[type=number] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #444;
+            color: white;
+            width: 80%;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .modal-content .type-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .modal-content .type-button {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content .type-button.selected {
+            background: linear-gradient(45deg, lime, green);
+            box-shadow: 0 0 8px lime;
+        }
+
+        .modal-content .confirm-cancel-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-content button {
+            background: linear-gradient(45deg, gold, orange);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: bold;
+            box-shadow: 0 0 8px gold;
+        }
+
+        .modal-content button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 12px white;
+        }
+
+        .modal-content .cancel-button {
+            background: #555;
+            box-shadow: none;
+        }
     </style>
 </head>
 <body>
@@ -251,6 +353,23 @@
         <button class="back-button" onclick="window.location.href='index.html'">Back to Value List</button>
     </div>
 
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <span style="position: absolute; top: 10px; right: 15px; font-size: 1.5em; cursor: pointer;" onclick="closeModal()">&times;</span>
+            <h2 id="modalItemName"></h2>
+            <label for="modalQuantity">Quantity:</label>
+            <input type="number" id="modalQuantity" value="1" min="1">
+            <div class="type-buttons">
+                <button class="type-button" id="modalTypeOG">OG</button>
+                <button class="type-button" id="modalTypeTag">Tag/Serial</button>
+            </div>
+            <div class="confirm-cancel-buttons">
+                <button onclick="confirmAddItem()">Confirm</button>
+                <button class="cancel-button" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let allItems = [];
         const offeredSearchInput = document.getElementById('offeredSearch');
@@ -264,6 +383,15 @@
         const tradeEvaluationDisplay = document.getElementById('tradeEvaluation');
         const evaluationReasonDisplay = document.getElementById('evaluationReason');
         const tradeBalanceDisplay = document.getElementById('tradeBalance');
+
+        const itemModal = document.getElementById('itemModal');
+        const modalItemName = document.getElementById('modalItemName');
+        const modalQuantityInput = document.getElementById('modalQuantity');
+        const modalTypeOGButton = document.getElementById('modalTypeOG');
+        const modalTypeTagButton = document.getElementById('modalTypeTag');
+        let selectedModalItem = null;
+        let modalItemType = null;
+        let modalAddItemType = null; // 'offered' or 'received'
 
         let offeredSelection = {};
         let receivedSelection = {};
@@ -285,6 +413,8 @@
                             const itemName = row.cells[0].textContent.trim();
                             let ogValue = row.cells[1].textContent.trim();
                             let tagValue = row.cells[2].textContent.trim();
+                            let demand = row.cells[3] ? row.cells[3].textContent.trim
+                            () : null; // Assuming demand is in the 4th column
 
                             ogValue = ogValue === 'N/A' ? null : parseFloat(ogValue);
                             tagValue = tagValue === 'N/A' ? null : parseFloat(tagValue);
@@ -292,7 +422,8 @@
                             allItems.push({
                                 name: itemName,
                                 ogValue: ogValue,
-                                tagValue: tagValue
+                                tagValue: tagValue,
+                                demand: demand
                             });
                         });
                     }
@@ -334,7 +465,7 @@
             addButton.classList.add('add-button');
             addButton.textContent = 'Add';
             addButton.addEventListener('click', () => {
-                addItemToSelection(type, item);
+                openModal(item, type);
             });
 
             const itemNameSpan = document.createElement('span');
@@ -347,24 +478,64 @@
             return itemRow;
         }
 
-        function addItemToSelection(type, item) {
-            const quantity = parseInt(prompt(`Enter quantity for "${item.name}":`, '1')) || 1;
-            const isOG = item.ogValue !== null ? confirm(`Is your "${item.name}" the Original (OG) version? (OK for Yes, Cancel for Tag/Serial)`) : false;
-            const valueToUse = isOG && item.ogValue !== null ? item.ogValue : (item.tagValue !== null ? item.tagValue : item.ogValue);
+        function openModal(item, type) {
+            selectedModalItem = item;
+            modalAddItemType = type;
+            modalItemName.textContent = item.name;
+            modalQuantityInput.value = 1;
+            modalItemType = null; // Reset selected type
+            modalTypeOGButton.classList.remove('selected');
+            modalTypeTagButton.classList.remove('selected');
+            itemModal.style.display = "block";
+        }
 
-            if (isNaN(valueToUse) || valueToUse === null) {
-                alert(`Value not available for "${item.name}".`);
+        function closeModal() {
+            itemModal.style.display = "none";
+            selectedModalItem = null;
+            modalAddItemType = null;
+        }
+
+        modalTypeOGButton.addEventListener('click', () => {
+            modalItemType = 'OG';
+            modalTypeOGButton.classList.add('selected');
+            modalTypeTagButton.classList.remove('selected');
+        });
+
+        modalTypeTagButton.addEventListener('click', () => {
+            modalItemType = 'Tag/Serial';
+            modalTypeTagButton.classList.add('selected');
+            modalTypeOGButton.classList.remove('selected');
+        });
+
+        function confirmAddItem() {
+            if (!selectedModalItem || !modalItemType) {
+                alert('Please select the item type (OG or Tag/Serial).');
                 return;
             }
 
-            const key = item.name + (isOG ? '-OG' : '-Tag');
-            if (type === 'offered') {
-                offeredSelection[key] = { name: item.name, quantity: quantity, value: valueToUse, type: isOG ? 'OG' : 'Tag/Serial' };
+            const quantity = parseInt(modalQuantityInput.value) || 1;
+            const valueToUse = (modalItemType === 'OG' && selectedModalItem.ogValue !== null) ? selectedModalItem.ogValue :
+                              (modalItemType === 'Tag/Serial' && selectedModalItem.tagValue !== null) ? selectedModalItem.tagValue :
+                              selectedModalItem.ogValue || selectedModalItem.tagValue;
+
+            if (isNaN(valueToUse) || valueToUse === null) {
+                alert(`Value not available for "${selectedModalItem.name}" (${modalItemType}).`);
+                closeModal();
+                return;
+            }
+
+            const key = selectedModalItem.name + '-' + modalItemType;
+            const newItem = { name: selectedModalItem.name, quantity: quantity, value: valueToUse, type: modalItemType };
+
+            if (modalAddItemType === 'offered') {
+                offeredSelection[key] = newItem;
                 updateSelectedItems('offered');
-            } else {
-                receivedSelection[key] = { name: item.name, quantity: quantity, value: valueToUse, type: isOG ? 'OG' : 'Tag/Serial' };
+            } else if (modalAddItemType === 'received') {
+                receivedSelection[key] = newItem;
                 updateSelectedItems('received');
             }
+
+            closeModal();
         }
 
         function updateSelectedItems(type) {
@@ -376,7 +547,10 @@
                 const selectedItem = selection[key];
                 const itemDiv = document.createElement('div');
                 itemDiv.classList.add('selected-item');
-                itemDiv.textContent = `<span class="math-inline">\{selectedItem\.name\} \(</span>{selectedItem.quantity} x ${selectedItem.value.toFixed(1)} - ${selectedItem.type})`;
+
+                const itemNameSpan = document.createElement('span');
+                itemNameSpan.textContent = `${selectedItem.name} (${selectedItem.quantity} x ${selectedItem.value.toFixed(1)} - ${selectedItem.type})`;
+                itemDiv.appendChild(itemNameSpan);
 
                 const removeButton = document.createElement('button');
                 removeButton.classList.add('remove-button');
@@ -406,38 +580,60 @@
                 receivedValue += receivedSelection[key].value * receivedSelection[key].quantity;
             }
 
-            displayTradeResult(offeredValue, receivedValue);
+            displayTradeResult(offeredValue, receivedValue, offeredSelection, receivedSelection);
         }
 
-        function displayTradeResult(offered, received) {
+        function displayTradeResult(offeredValue, receivedValue, offeredSelection, receivedSelection) {
             tradeResultContainer.style.display = 'block';
-            const tolerance = 0.05; // 5% tolerance for "Fair"
+            const tolerance = 0.05; // Base tolerance
 
             let evaluationText = '';
             let evaluationClass = '';
             let reasonText = '';
 
-            if (received > offered * (1 + tolerance)) {
+            let offeredDemandScore = calculateDemandScore(offeredSelection);
+            let receivedDemandScore = calculateDemandScore(receivedSelection);
+
+            if (receivedValue > offeredValue * (1 + tolerance) || (receivedValue >= offeredValue * (1 - tolerance) && receivedDemandScore > offeredDemandScore + 1)) {
                 evaluationText = 'WIN';
                 evaluationClass = 'win-animation';
-                reasonText = `You are receiving more value (${received.toFixed(1)}) than you are offering (${offered.toFixed(1)}).`;
-            } else if (offered > received * (1 + tolerance)) {
+                reasonText = `You are receiving more value or have a significant demand advantage. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
+            } else if (offeredValue > receivedValue * (1 + tolerance) || (offeredValue >= receivedValue * (1 - tolerance) && offeredDemandScore > receivedDemandScore + 1)) {
                 evaluationText = 'LOSE';
                 evaluationClass = 'lose-animation';
-                reasonText = `You are receiving less value (${received.toFixed(1)}) than you are offering (${offered.toFixed(1)}).`;
+                reasonText = `You are receiving less value or have a significant demand disadvantage. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
             } else {
                 evaluationText = 'FAIR';
                 evaluationClass = 'fair-animation';
-                reasonText = `The trade is within a reasonable value range (Offered: ${offered.toFixed(1)}, Received: ${received.toFixed(1)}).`;
+                reasonText = `The base value is within a reasonable range, and demand is relatively balanced. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
             }
 
             tradeEvaluationDisplay.textContent = evaluationText;
             tradeResultAnimation.className = 'result-animation ' + evaluationClass;
             evaluationReasonDisplay.textContent = reasonText;
 
-            const balance = received - offered;
+            const balance = receivedValue - offeredValue;
             const balanceText = balance >= 0 ? `Balance: +${balance.toFixed(1)}` : `Balance: ${balance.toFixed(1)}`;
             tradeBalanceDisplay.textContent = balanceText;
+        }
+
+        function calculateDemandScore(selection) {
+            let totalDemandScore = 0;
+            for (const key in selection) {
+                const itemName = selection[key].name;
+                const item = allItems.find(i => i.name === itemName);
+                if (item && item.demand) {
+                    let score = 0;
+                    switch (item.demand.toLowerCase()) {
+                        case 'low': score = 1; break;
+                        case 'medium': score = 2; break;
+                        case 'high': score = 3; break;
+                        case 'very high': score = 4; break;
+                    }
+                    totalDemandScore += score * selection[key].quantity;
+                }
+            }
+            return totalDemandScore;
         }
 
         // Load the item data when the calculator page loads
