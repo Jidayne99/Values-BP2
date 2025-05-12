@@ -314,6 +314,46 @@
             background: #555;
             box-shadow: none;
         }
+
+        .trade-details-container {
+            margin-top: 20px;
+            text-align: left;
+            padding: 15px;
+            border: 1px dashed #666;
+            border-radius: 8px;
+        }
+
+        .trade-details-title {
+            font-size: 1.2em;
+            color: cyan;
+            margin-bottom: 10px;
+        }
+
+        .trade-item {
+            font-size: 1em;
+            color: #eee;
+            margin-bottom: 5px;
+        }
+
+        .trade-evaluation-bold {
+            font-weight: bold;
+            font-size: 1.2em; /* Slightly larger than regular text */
+            display: inline-block; /* Allows for background styling to fit text */
+            padding: 2px 5px; /* Add some padding around the text */
+            border-radius: 5px; /* Optional: round the corners */
+        }
+        .win-evaluation {
+            background-color: rgba(0, 255, 0, 0.15); /* Light green background */
+            color: lime;
+        }
+        .fair-evaluation {
+            background-color: rgba(255, 255, 0, 0.15); /* Light yellow background */
+            color: yellow;
+        }
+        .lose-evaluation {
+            background-color: rgba(255, 0, 0, 0.15); /* Light red background */
+            color: #ff4d4d;
+        }
     </style>
 </head>
 <body>
@@ -348,6 +388,17 @@
                 <p id="evaluationReason" class="reason-text"></p>
                 <p id="tradeBalance" class="balance-text"></p>
             </div>
+            <div id="tradeDetailsContainer" class="trade-details-container" style="display: none;">
+                <h3 class="trade-details-title">Trade Details</h3>
+                <div id="offeredDetails">
+                    <h4 style="color: lime;">Offered Items:</h4>
+                    <ul id="offeredItemsList"></ul>
+                </div>
+                <div id="receivedDetails">
+                    <h4 style="color: #ff69b4;">Received Items:</h4>
+                    <ul id="receivedItemsList"></ul>
+                </div>
+            </div>
         </div>
 
         <button class="back-button" onclick="window.location.href='index.html'">Back to Value List</button>
@@ -378,11 +429,15 @@
         const receivedItemListContainer = document.getElementById('receivedItemList');
         const selectedOfferedItemsContainer = document.getElementById('selectedOfferedItems');
         const selectedReceivedItemsContainer = document.getElementById('selectedReceivedItems');
-        const tradeResultContainer = document.getElementById('tradeResultContainer');
-        const tradeResultAnimation = document.getElementById('tradeResultAnimation');
+      const tradeResultAnimation = document.getElementById('tradeResultAnimation');
         const tradeEvaluationDisplay = document.getElementById('tradeEvaluation');
         const evaluationReasonDisplay = document.getElementById('evaluationReason');
         const tradeBalanceDisplay = document.getElementById('tradeBalance');
+        const tradeDetailsContainer = document.getElementById('tradeDetailsContainer');
+        const offeredDetailsContainer = document.getElementById('offeredDetails');
+        const receivedDetailsContainer = document.getElementById('receivedDetails');
+        const offeredItemsList = document.getElementById('offeredItemsList');
+        const receivedItemsList = document.getElementById('receivedItemsList');
 
         const itemModal = document.getElementById('itemModal');
         const modalItemName = document.getElementById('modalItemName');
@@ -413,8 +468,7 @@
                             const itemName = row.cells[0].textContent.trim();
                             let ogValue = row.cells[1].textContent.trim();
                             let tagValue = row.cells[2].textContent.trim();
-                            let demand = row.cells[3] ? row.cells[3].textContent.trim
-                            () : null; // Assuming demand is in the 4th column
+                            let demand = row.cells[3] ? row.cells[3].textContent.trim() : null; // Assuming demand is in the 4th column
 
                             ogValue = ogValue === 'N/A' ? null : parseFloat(ogValue);
                             tagValue = tagValue === 'N/A' ? null : parseFloat(tagValue);
@@ -515,8 +569,8 @@
 
             const quantity = parseInt(modalQuantityInput.value) || 1;
             const valueToUse = (modalItemType === 'OG' && selectedModalItem.ogValue !== null) ? selectedModalItem.ogValue :
-                              (modalItemType === 'Tag/Serial' && selectedModalItem.tagValue !== null) ? selectedModalItem.tagValue :
-                              selectedModalItem.ogValue || selectedModalItem.tagValue;
+                                (modalItemType === 'Tag/Serial' && selectedModalItem.tagValue !== null) ? selectedModalItem.tagValue :
+                                selectedModalItem.ogValue || selectedModalItem.tagValue;
 
             if (isNaN(valueToUse) || valueToUse === null) {
                 alert(`Value not available for "${selectedModalItem.name}" (${modalItemType}).`);
@@ -585,6 +639,7 @@
 
         function displayTradeResult(offeredValue, receivedValue, offeredSelection, receivedSelection) {
             tradeResultContainer.style.display = 'block';
+            tradeDetailsContainer.style.display = 'block';
             const tolerance = 0.05; // Base tolerance
 
             let evaluationText = '';
@@ -611,10 +666,31 @@
             tradeEvaluationDisplay.textContent = evaluationText;
             tradeResultAnimation.className = 'result-animation ' + evaluationClass;
             evaluationReasonDisplay.textContent = reasonText;
+            tradeEvaluationDisplay.className = 'evaluation-text trade-evaluation-bold ' + evaluationClass.replace('-animation', '-evaluation');
+
 
             const balance = receivedValue - offeredValue;
             const balanceText = balance >= 0 ? `Balance: +${balance.toFixed(1)}` : `Balance: ${balance.toFixed(1)}`;
             tradeBalanceDisplay.textContent = balanceText;
+
+            // Display trade details
+            offeredItemsList.innerHTML = '';
+            for (const key in offeredSelection) {
+                const item = offeredSelection[key];
+                const listItem = document.createElement('li');
+                listItem.classList.add('trade-item');
+                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type})`;
+                offeredItemsList.appendChild(listItem);
+            }
+
+            receivedItemsList.innerHTML = '';
+            for (const key in receivedSelection) {
+                const item = receivedSelection[key];
+                const listItem = document.createElement('li');
+                listItem.classList.add('trade-item');
+                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type})`;
+                receivedItemsList.appendChild(listItem);
+            }
         }
 
         function calculateDemandScore(selection) {
