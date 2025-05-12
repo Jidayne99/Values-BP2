@@ -398,6 +398,8 @@
                     <h4 style="color: #ff69b4;">Received Items:</h4>
                     <ul id="receivedItemsList"></ul>
                 </div>
+                <div id="offeredTotalValue" class="balance-text" style="margin-top: 10px;"></div>
+                <div id="receivedTotalValue" class="balance-text"></div>
             </div>
         </div>
 
@@ -424,7 +426,8 @@
     <script>
         let allItems = [];
         const offeredSearchInput = document.getElementById('offeredSearch');
-        const receivedSearchInput = document.getElementById('receivedSearch');
+        const receivedSearchInput = document.getElementById
+        ('receivedSearch');
         const offeredItemListContainer = document.getElementById('offeredItemList');
         const receivedItemListContainer = document.getElementById('receivedItemList');
         const selectedOfferedItemsContainer = document.getElementById('selectedOfferedItems');
@@ -438,6 +441,8 @@
         const receivedDetailsContainer = document.getElementById('receivedDetails');
         const offeredItemsList = document.getElementById('offeredItemsList');
         const receivedItemsList = document.getElementById('receivedItemsList');
+        const offeredTotalValueDisplay = document.getElementById('offeredTotalValue');
+        const receivedTotalValueDisplay = document.getElementById('receivedTotalValue');
 
         const itemModal = document.getElementById('itemModal');
         const modalItemName = document.getElementById('modalItemName');
@@ -573,7 +578,7 @@
                                 selectedModalItem.ogValue || selectedModalItem.tagValue;
 
             if (isNaN(valueToUse) || valueToUse === null) {
-                alert(Value not available for "${selectedModalItem.name}" (${modalItemType}).);
+                alert(`Value not available for "${selectedModalItem.name}" (${modalItemType}).`);
                 closeModal();
                 return;
             }
@@ -603,7 +608,7 @@
                 itemDiv.classList.add('selected-item');
 
                 const itemNameSpan = document.createElement('span');
-                itemNameSpan.textContent = ${selectedItem.name} (${selectedItem.quantity} x ${selectedItem.value.toFixed(1)} - ${selectedItem.type});
+                itemNameSpan.textContent = `${selectedItem.name} (${selectedItem.quantity} x ${selectedItem.value.toFixed(1)} - ${selectedItem.type})`;
                 itemDiv.appendChild(itemNameSpan);
 
                 const removeButton = document.createElement('button');
@@ -650,55 +655,61 @@
             let receivedDemandScore = calculateDemandScore(receivedSelection);
 
             if (receivedValue > offeredValue * (1 + tolerance) || (receivedValue >= offeredValue * (1 - tolerance) && receivedDemandScore > offeredDemandScore + 1)) {
-                evaluationText = 'WIN';
+                evaluationText = '<span class="trade-evaluation-bold win-evaluation">WIN</span>';
                 evaluationClass = 'win-animation';
-                reasonText = You are receiving more value or have a significant demand advantage. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)});
+                reasonText = `You are receiving more value or have a significant demand advantage. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
             } else if (offeredValue > receivedValue * (1 + tolerance) || (offeredValue >= receivedValue * (1 - tolerance) && offeredDemandScore > receivedDemandScore + 1)) {
-                evaluationText = 'LOSE';
+                evaluationText = '<span class="trade-evaluation-bold lose-evaluation">LOSE</span>';
                 evaluationClass = 'lose-animation';
-                reasonText = You are receiving less value or have a significant demand disadvantage. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)});
+                reasonText = `You are receiving less value or have a significant demand disadvantage. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
             } else {
-                evaluationText = 'FAIR';
+                evaluationText = '<span class="trade-evaluation-bold fair-evaluation">FAIR</span>';
                 evaluationClass = 'fair-animation';
-                reasonText = The base value is within a reasonable range, and demand is relatively balanced. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)});
+                reasonText = `The base value is within a reasonable range, and demand is relatively balanced. (Offered: ${offeredValue.toFixed(1)}, Received: ${receivedValue.toFixed(1)})`;
             }
 
-            tradeEvaluationDisplay.textContent = **${evaluationText}**;
+            tradeEvaluationDisplay.innerHTML = evaluationText;
             tradeResultAnimation.className = 'result-animation ' + evaluationClass;
             evaluationReasonDisplay.textContent = reasonText;
-            tradeEvaluationDisplay.className = 'evaluation-text trade-evaluation-bold ' + evaluationClass.replace('-animation', '-evaluation');
-
 
             const balance = receivedValue - offeredValue;
-            const balanceText = balance >= 0 ? Balance: +${balance.toFixed(1)} : Balance: ${balance.toFixed(1)};
+            const balanceText = balance >= 0 ? `Balance: +${balance.toFixed(1)}` : `Balance: ${balance.toFixed(1)}`;
             tradeBalanceDisplay.textContent = balanceText;
 
             // Display trade details with stats
             offeredItemsList.innerHTML = '';
+            let offeredTotal = 0;
             for (const key in offeredSelection) {
                 const item = offeredSelection[key];
                 const originalItemData = allItems.find(i => i.name === item.name);
-                const demandText = originalItemData && originalItemData.demand ? (Demand: ${originalItemData.demand}) : '(Demand: N/A)';
-                const valueText = item.type === 'OG' ? Value: ${originalItemData.ogValue !== null ? originalItemData.ogValue.toFixed(1) : 'N/A'} : Value: ${originalItemData.tagValue !== null ? originalItemData.tagValue.toFixed(1) : 'N/A'};
+                const demandText = originalItemData && originalItemData.demand ? `(Demand: ${originalItemData.demand})` : '(Demand: N/A)';
+                const valueText = item.type === 'OG' ? `Value: ${originalItemData.ogValue !== null ? originalItemData.ogValue.toFixed(1) : 'N/A'}` : `Value: ${originalItemData.tagValue !== null ? originalItemData.tagValue.toFixed(1) : 'N/A'}`;
+                const totalItemValue = item.value * item.quantity;
+                offeredTotal += totalItemValue;
 
                 const listItem = document.createElement('li');
                 listItem.classList.add('trade-item');
-                listItem.textContent = ${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText};
+                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText} - Total: ${totalItemValue.toFixed(1)}`;
                 offeredItemsList.appendChild(listItem);
             }
+            offeredTotalValueDisplay.textContent = `Total Offered Value: ${offeredTotal.toFixed(1)}`;
 
             receivedItemsList.innerHTML = '';
+            let receivedTotal = 0;
             for (const key in receivedSelection) {
                 const item = receivedSelection[key];
                 const originalItemData = allItems.find(i => i.name === item.name);
-                const demandText = originalItemData && originalItemData.demand ? (Demand: ${originalItemData.demand}) : '(Demand: N/A)';
-                const valueText = item.type === 'OG' ? Value: ${originalItemData.ogValue !== null ? originalItemData.ogValue.toFixed(1) : 'N/A'} : Value: ${originalItemData.tagValue !== null ? originalItemData.tagValue.toFixed(1) : 'N/A'};
+                const demandText = originalItemData && originalItemData.demand ? `(Demand: ${originalItemData.demand})` : '(Demand: N/A)';
+                const valueText = item.type === 'OG' ? `Value: ${originalItemData.ogValue !== null ? originalItemData.ogValue.toFixed(1) : 'N/A'}` : `Value: ${originalItemData.tagValue !== null ? originalItemData.tagValue.toFixed(1) : 'N/A'}`;
+                const totalItemValue = item.value * item.quantity;
+                receivedTotal += totalItemValue;
 
                 const listItem = document.createElement('li');
                 listItem.classList.add('trade-item');
-                listItem.textContent = ${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText};
+                listItem.textContent = `${item.name} (${item.quantity} x ${item.value.toFixed(1)} - ${item.type}) ${demandText} - ${valueText} - Total: ${totalItemValue.toFixed(1)}`;
                 receivedItemsList.appendChild(listItem);
             }
+            receivedTotalValueDisplay.textContent = `Total Received Value: ${receivedTotal.toFixed(1)}`;
         }
 
         function calculateDemandScore(selection) {
