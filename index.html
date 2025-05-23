@@ -92,28 +92,30 @@ td:nth-child(n) {
             letter-spacing: 2px;
         }
         /* Notes & Tips Styling */
-        .notes-container, .tips-container {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: left;
-            color: green;
-            font-size: 1.2em;
-            font-weight: bold;
-            text-shadow: 0 0 10px white;
-            border: 2px solid white;
-            width: 80%;
-            margin: 20px auto;
-            display: none;
-        }
-        .glowing-title {
-            font-size: 1.8em;
-            color: green;
-            text-shadow: 0 0 15px cyan;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-align: center;
-        }
+.notes-container, .tips-container {
+    background: rgba(20, 20, 30, 0.9);
+    padding: 20px;
+    border-radius: 12px;
+    color: #a8ffae; /* Soft neon green */
+    font-size: 1.1em;
+    font-weight: 500;
+    text-shadow: 0 0 5px #00ffcc;
+    border: 1px solid #00ffaa;
+    width: 85%;
+    margin: 25px auto;
+    display: none;
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
+    backdrop-filter: blur(4px);
+}
+.glowing-title {
+    font-size: 2em;
+    color: #66ffcc;
+    text-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 15px;
+}
     </style>
 </head>
 <body>
@@ -144,7 +146,7 @@ td:nth-child(n) {
     <h3 style="color: gold; text-shadow: 0 0 15px gold; font-weight: bold;"> What's New/Coming? </h3>
     <ul style="list-style: none; padding: 0; font-size: 1.2em; font-weight: bold;">
         <li style="color: lime; text-shadow: 0 0 12px lime;">📦 Major Value + Prices changes! </li>
-        <li style="color: cyan; text-shadow: 0 0 12px cyan;">🔢 New Tip + Note added ( about Prices )! </li>
+        <li style="color: cyan; text-shadow: 0 0 12px cyan;">🔢 New Tip + Note. </li>
         <li style="color: magenta; text-shadow: 0 0 12px magenta;">🌟 Website Enhancements! </li>
     </ul>
 </footer>
